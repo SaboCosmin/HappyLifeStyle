@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "320784198989",
+    "firebase_url": "https://happylifestyle-87c97.firebaseio.com",
+    "project_id": "happylifestyle-87c97",
+    "storage_bucket": "happylifestyle-87c97.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320784198989:android:05673c1249412be6",
+        "android_client_info": {
+          "package_name": "com.hls.happylifestyle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320784198989-d8sn3fovdm8utfu3r8asnqkrruq1avvl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hls.happylifestyle",
+            "certificate_hash": "f8a2d6089c259d54e47593955d6ff197d4519451"
+          }
+        },
+        {
+          "client_id": "320784198989-mhrr8uku1uqr69bftppdg8b4nst1ppef.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9ttiQX9BpfwYu1z5XYjfgJeoDDD3V_zc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320784198989-mhrr8uku1uqr69bftppdg8b4nst1ppef.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
