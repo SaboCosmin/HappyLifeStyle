@@ -66,7 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
             userName.setText(userProfile.getName());
             userAge.setText(Integer.toString(userProfile.getAge()));
             userWeight.setText(Float.toString(userProfile.getWeight()));
-            userHeight.setText(Float.toString(userProfile.getHeight()));
+            userHeight.setText(Integer.toString(userProfile.getHeight()));
             pickedLayout.setVisibility(LinearLayout.VISIBLE);
             pickedGender.setText(userProfile.getGender());
             pickedActivity.setText("Act lvl: " + userProfile.getActivity_level());
@@ -92,11 +92,11 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         String height_text = userHeight.getText().toString();
-        float height;
+        int height;
         if(TextUtils.isEmpty(height_text)){
-            height = 1.80f;
+            height = 1180;
         }else{
-            height = Float.parseFloat(userHeight.getText().toString());
+            height = Integer.parseInt(userHeight.getText().toString());
         }
 
         String weight_text = userWeight.getText().toString();
@@ -133,7 +133,7 @@ public class ProfileActivity extends AppCompatActivity {
         mEditor.commit();
         mEditor.putString(getString(R.string.key_activity), Integer.toString(profile.getActivity_level()));
         mEditor.commit();
-        mEditor.putString(getString(R.string.key_height), Float.toString(profile.getHeight()));
+        mEditor.putString(getString(R.string.key_height), Integer.toString(profile.getHeight()));
         mEditor.commit();
         mEditor.putString(getString(R.string.key_weight), Float.toString(profile.getWeight()));
         mEditor.commit();
@@ -149,8 +149,8 @@ public class ProfileActivity extends AppCompatActivity {
         String gender = mSharedPreferences.getString(getString(R.string.key_gender), "Female");
         int age = Integer.parseInt(mSharedPreferences.getString(getString(R.string.key_age), "30"));
         int activity_level = Integer.parseInt(mSharedPreferences.getString(getString(R.string.key_activity), "0"));
-        float height = Float.parseFloat(mSharedPreferences.getString(getString(R.string.key_height), "1.80"));
-        float weight = Float.parseFloat(mSharedPreferences.getString(getString(R.string.key_weight), "80"));
+        int height = Integer.parseInt(mSharedPreferences.getString(getString(R.string.key_height), "180"));
+        float weight = Float.parseFloat(mSharedPreferences.getString(getString(R.string.key_weight), "80f"));
         String purpose = mSharedPreferences.getString(getString(R.string.key_purpose), "DefaultName");
 
         userProfile = new Profile(name, gender, age, activity_level, height, weight, purpose);

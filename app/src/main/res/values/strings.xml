@@ -42,14 +42,14 @@
     <string name="user_key_proteins_total">com.hls.happylifestyle.proteinsTotal</string>
     <string name="user_key_carbs_total">com.hls.happylifestyle.carbsTotal</string>
     <string name="user_key_fats_total">com.hls.happylifestyle.fatsTotal</string>
-    <string name="user_key_calories_total">com.hls.happylifestyle.fatsTotal</string>
+    <string name="user_key_calories_total">com.hls.happylifestyle.caloriesTotal</string>
 
     <string name="user_key_proteins_consumed">com.hls.happylifestyle.proteinsConsumed</string>
     <string name="user_key_carbs_consumed">com.hls.happylifestyle.carbsConsumed</string>
     <string name="user_key_fats_consumed">com.hls.happylifestyle.fatsConsumed</string>
-    <string name="user_key_calories_consumed">com.hls.happylifestyle.fatsConsumed</string>
-    <string name="user_key_fiber_consumed">com.hls.happylifestyle.fatsConsumed</string>
-    <string name="user_key_sugar_consumed">com.hls.happylifestyle.fatsConsumed</string>
+    <string name="user_key_calories_consumed">com.hls.happylifestyle.caloriesConsumed</string>
+    <string name="user_key_fiber_consumed">com.hls.happylifestyle.fiberConsumed</string>
+    <string name="user_key_sugar_consumed">com.hls.happylifestyle.sugarConsumed</string>
 
 
     <string name="prompt_email">Email</string>
@@ -72,8 +72,8 @@
         <item>0_None</item>
         <item>1_Normal</item>
         <item>2_Active</item>
-        <item>3_Normal + Hobby Sport</item>
-        <item>4_Active + Hobby Sport</item>
+        <item>3_Normal + PhysicalActivity</item>
+        <item>4_Active + PhysicalActivity</item>
         <item>5_Performance Athlete</item>
 
     </string-array>

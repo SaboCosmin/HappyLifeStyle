@@ -55,7 +55,7 @@ public class CreateNewMenuActivity extends AppCompatActivity {
         String gender = mSharedPreferences.getString(getString(R.string.key_gender), "Male");
         int age = Integer.parseInt(mSharedPreferences.getString(getString(R.string.key_age), "30"));
         int activity_level = Integer.parseInt(mSharedPreferences.getString(getString(R.string.key_activity), "0"));
-        float height = Float.parseFloat(mSharedPreferences.getString(getString(R.string.key_height), "1.80"));
+        int height = Integer.parseInt(mSharedPreferences.getString(getString(R.string.key_height), "1.80"));
         float weight = Float.parseFloat(mSharedPreferences.getString(getString(R.string.key_weight), "80"));
         String purpose = mSharedPreferences.getString(getString(R.string.key_purpose), "Better Nutrition");
 
@@ -65,9 +65,9 @@ public class CreateNewMenuActivity extends AppCompatActivity {
     private void calculateMacros(){
         float result;
         if (userProfile.getGender().equals("Female")){
-            result = 10*userProfile.getWeight() + 6.25f * userProfile.getHeight() * 100 - 5*userProfile.getAge() - 161;
+            result = 10 * userProfile.getWeight() + 6.25f * userProfile.getHeight() - 5 * userProfile.getAge() - 161;
         }else{
-            result = 10*userProfile.getWeight() + 6.25f * userProfile.getHeight() * 100 - 5*userProfile.getAge() + 5;
+            result = 10 * userProfile.getWeight() + 6.25f * userProfile.getHeight() - 5 * userProfile.getAge() + 5;
         }
         switch (userProfile.getActivity_level()){
             case 0: result = result  * 1.1f;
@@ -117,7 +117,6 @@ public class CreateNewMenuActivity extends AppCompatActivity {
 
         float fats;
         if(TextUtils.isEmpty(userFatsSelect.getText().toString())){
-            fats = userFatsAuto;
             fats = userFatsAuto;
         }else{
             fats = Float.parseFloat(userFatsSelect.getText().toString());

@@ -1,15 +1,11 @@
 package com.hls.happylifestyle;
 
 public class Profile {
-    private String name;
-    private String gender;
-    private String purpose;
-    private int age;
-    private int activity_level;
-    private float height;
+    private String name, gender, purpose;
+    private int age, activity_level, height;
     private float weight;
 
-    public Profile(String name,String gender, int age, int activity_level, float height, float weight, String purpose) {
+    public Profile(String name, String gender, int age, int activity_level, int height, float weight, String purpose) {
         this.name = name;
         this.gender = gender;
         this.age = age;
@@ -59,11 +55,11 @@ public class Profile {
         this.activity_level = activity_level;
     }
 
-    public float getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    public void setHeight(float height) {
+    public void setHeight(int height) {
         this.height = height;
     }
 

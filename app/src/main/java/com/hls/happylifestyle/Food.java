@@ -1,24 +1,19 @@
 package com.hls.happylifestyle;
 
 public class Food {
-    private  String name;
-    private String description;
-    private int calories;
-    private int proteins;
-    private int carbs;
-    private int sugar;
-    private int fiber;
-    private int fat;
-    private int price;
-    private int timeToPrepare;
+    private  String name, description, type, goesWith;
+    private int calories, proteins, carbs, sugar, fiber;
+    private int fat,  price, timeToPrepare, minWeight, maxWeigh;
 
     public Food(){
 
     }
 
-    public Food(String name, String description, int calories, int proteins, int carbs, int sugar, int fiber, int fat, int price, int timeToPrepare) {
+    public Food(String name, String description, String type, String goesWith, int calories, int proteins, int carbs, int sugar, int fiber, int fat, int price, int timeToPrepare, int minWeight, int maxWeigh) {
         this.name = name;
         this.description = description;
+        this.type = type;
+        this.goesWith = goesWith;
         this.calories = calories;
         this.proteins = proteins;
         this.carbs = carbs;
@@ -27,6 +22,8 @@ public class Food {
         this.fat = fat;
         this.price = price;
         this.timeToPrepare = timeToPrepare;
+        this.minWeight = minWeight;
+        this.maxWeigh = maxWeigh;
     }
 
     public Food(Food food) {
@@ -40,6 +37,38 @@ public class Food {
         this.fat = food.getFat();
         this.price = food.getPrice();
         this.timeToPrepare = food.getTimeToPrepare();
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getGoesWith() {
+        return goesWith;
+    }
+
+    public void setGoesWith(String goesWith) {
+        this.goesWith = goesWith;
+    }
+
+    public int getMinWeight() {
+        return minWeight;
+    }
+
+    public void setMinWeight(int minWeight) {
+        this.minWeight = minWeight;
+    }
+
+    public int getMaxWeigh() {
+        return maxWeigh;
+    }
+
+    public void setMaxWeigh(int maxWeigh) {
+        this.maxWeigh = maxWeigh;
     }
 
     public String getName() {

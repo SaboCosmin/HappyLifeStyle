@@ -31,7 +31,7 @@
             android:layout_marginVertical="8dp"
             android:layout_weight="1"
             android:background="@drawable/box_button"
-            android:text="Profile"
+            android:text="PROFILE"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="30dp" />
@@ -45,7 +45,7 @@
             android:layout_marginVertical="8dp"
             android:layout_weight="1"
             android:background="@drawable/box_button"
-            android:text="See Menu"
+            android:text="YOUR MENU"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="30dp" />
@@ -59,7 +59,7 @@
             android:layout_marginVertical="8dp"
             android:layout_weight="1"
             android:background="@drawable/box_button"
-            android:text="Create new Menu"
+            android:text="CREATE NEW MENU"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="30dp" />
@@ -73,7 +73,7 @@
             android:layout_marginVertical="8dp"
             android:layout_weight="1"
             android:background="@drawable/box_button"
-            android:text="Calculator"
+            android:text="CALCULATOR"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="30dp" />
@@ -87,7 +87,7 @@
             android:layout_marginVertical="8dp"
             android:layout_weight="1"
             android:background="@drawable/box_button"
-            android:text="Add Food"
+            android:text="ADD FOOD"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="30dp" />
