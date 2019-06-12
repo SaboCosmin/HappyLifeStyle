@@ -27,7 +27,7 @@ public class InspectFoodActivity extends AppCompatActivity {
     }
 
     public String getPrice(int value){
-        if(value < 1){
+        if(value < 5){
             return "LOW";
         }else if(value>10){
             return "HIGH";

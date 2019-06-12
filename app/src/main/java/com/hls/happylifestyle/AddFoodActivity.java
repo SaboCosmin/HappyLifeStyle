@@ -49,8 +49,10 @@ public class AddFoodActivity extends AppCompatActivity {
         int min = Integer.parseInt(foodMinWeight.getText().toString());
         int max = Integer.parseInt(foodMaxWeight.getText().toString());
 
-        Food food = new Food(name, description, type, goesWith, calories, proteins, carbs, sugar, fiber, fat, price, timeToPrepare, min, max);
+        Food food = new Food(name, description, type, goesWith, calories, proteins,
+                                carbs, sugar, fiber, fat, price, timeToPrepare, min, max);
         mDatabase.child("foods").push().setValue(food);
+
         Toast.makeText(this, "Your food was added to the Database", Toast.LENGTH_SHORT).show();
     }
 

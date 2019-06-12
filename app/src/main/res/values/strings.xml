@@ -30,6 +30,8 @@
     <string name="user_purpose">Select Purpose: </string>
     <string name="user_activity_level">Select Activity Level: </string>
 
+    <string name="new_menu">com.hls.happylifestyle.newMenu</string>
+
     <string name="key_first_run">com.hls.happylifestyle.firstRun</string>
     <string name="key_name">com.hls.happylifestyle.name</string>
     <string name="key_age">com.hls.happylifestyle.age</string>
@@ -50,6 +52,38 @@
     <string name="user_key_calories_consumed">com.hls.happylifestyle.caloriesConsumed</string>
     <string name="user_key_fiber_consumed">com.hls.happylifestyle.fiberConsumed</string>
     <string name="user_key_sugar_consumed">com.hls.happylifestyle.sugarConsumed</string>
+
+    <string name="snack1_name">com.hls.happylifestyle.snack1Name</string>
+    <string name="snack2_name">com.hls.happylifestyle.snack2Name</string>
+    <string name="breakfast1_name">com.hls.happylifestyle.breakfast1Name</string>
+    <string name="breakfast2_name">com.hls.happylifestyle.breakfast2Name</string>
+    <string name="lunch1_name">com.hls.happylifestyle.lunch1Name</string>
+    <string name="lunch2_name">com.hls.happylifestyle.lunch2Name</string>
+    <string name="dinner1_name">com.hls.happylifestyle.dinner1Name</string>
+    <string name="dinner2_name">com.hls.happylifestyle.dinner2Name</string>
+
+    <string name="snack1_consumed">com.hls.happylifestyle.snack1Consumed</string>
+    <string name="snack2_consumed">com.hls.happylifestyle.snack2Consumed</string>
+    <string name="breakfast_consumed">com.hls.happylifestyle.breakfastConsumed</string>
+    <string name="lunch_consumed">com.hls.happylifestyle.lunchConsumed</string>
+    <string name="dinner_consumed">com.hls.happylifestyle.dinnerConsumed</string>
+
+
+    <string name="snack1_weight">com.hls.happylifestyle.snack1Weight</string>
+    <string name="snack2_weight">com.hls.happylifestyle.snack2Weight</string>
+    <string name="breakfast1_weight">com.hls.happylifestyle.breakfast1Weight</string>
+    <string name="breakfast2_weight">com.hls.happylifestyle.breakfast2Weight</string>
+    <string name="lunch1_weight">com.hls.happylifestyle.lunch1Weight</string>
+    <string name="lunch2_weight">com.hls.happylifestyle.lunch2Weight</string>
+    <string name="dinner1_weight">com.hls.happylifestyle.dinner1Weight</string>
+    <string name="dinner2_weight">com.hls.happylifestyle.dinner2Weight</string>
+
+    <string name="proteins_used_weight">com.hls.happylifestyle.proteinsUsed</string>
+    <string name="carbs_used_weight">com.hls.happylifestyle.carbsUsed</string>
+    <string name="fats_used_weight">com.hls.happylifestyle.fatsUsed</string>
+    <string name="calories_used_weight">com.hls.happylifestyle.caloriesUsed</string>
+    <string name="fiber_used_weight">com.hls.happylifestyle.fiberUsed</string>
+    <string name="sugar_used_weight">com.hls.happylifestyle.sugarUsed</string>
 
 
     <string name="prompt_email">Email</string>

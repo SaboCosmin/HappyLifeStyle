@@ -72,15 +72,15 @@ public class CreateNewMenuActivity extends AppCompatActivity {
         switch (userProfile.getActivity_level()){
             case 0: result = result  * 1.1f;
                 break;
-            case 1: result = result  * 1.4f;
+            case 1: result = result  * 1.2f;
                 break;
-            case 2: result = result  * 1.55f;
+            case 2: result = result  * 1.4f;
                 break;
-            case 3: result = result  * 1.65f;
+            case 3: result = result  * 1.6f;
                 break;
-            case 4: result = result  * 1.72f;
+            case 4: result = result  * 1.8f;
                 break;
-            case 5: result = result  * 1.9f;
+            case 5: result = result  * 2f;
                 break;
                 default: result = result * 1.1f;
         }
@@ -128,6 +128,8 @@ public class CreateNewMenuActivity extends AppCompatActivity {
         calories = (proteins * 4) + (carbs * 4) + (fats * 9);
         mEditor.putFloat(getString(R.string.user_key_calories_total), calories);
         mEditor.commit();
+        mEditor.putBoolean(getString(R.string.new_menu), true);
+        mEditor.commit();
         Toast.makeText(this, "Your manual added macronutrients are updating... + new calories count: " + calories, Toast.LENGTH_SHORT).show();
     }
     public  void automatCreate(View view){
@@ -138,6 +140,8 @@ public class CreateNewMenuActivity extends AppCompatActivity {
         mEditor.putFloat(getString(R.string.user_key_fats_total), userFatsAuto);
         mEditor.commit();
         mEditor.putFloat(getString(R.string.user_key_calories_total), userCaloriesAuto);
+        mEditor.commit();
+        mEditor.putBoolean(getString(R.string.new_menu), true);
         mEditor.commit();
         Toast.makeText(this, "Your macronutrients are updating...", Toast.LENGTH_SHORT).show();
     }

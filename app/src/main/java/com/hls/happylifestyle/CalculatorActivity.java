@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -41,7 +40,6 @@ public class CalculatorActivity extends AppCompatActivity {
 
                 for(DataSnapshot child : children){
                     Food value = child.getValue(Food.class);
-                    Log.d("test", "adauga element");
                     mFoods.add(value);
                 }
                 mFoodListView.setAdapter(mFoodListAdapter);
