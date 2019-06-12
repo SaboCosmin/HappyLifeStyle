@@ -121,6 +121,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/genderLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -159,6 +160,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/purposeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -205,6 +207,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/activityLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -233,21 +236,39 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:gravity="bottom|center"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/save_button"
-            android:layout_width="300dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/box_button"
             android:gravity="bottom"
             android:onClick="saveUser"
             android:padding="10dp"
             android:text="@string/save_button"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="25sp" />
+        <Button
+            android:id="@+id/edit_button"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/box_button"
+            android:gravity="bottom"
+            android:onClick="editPressed"
+            android:padding="10dp"
+            android:text="EDIT"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="25sp" />

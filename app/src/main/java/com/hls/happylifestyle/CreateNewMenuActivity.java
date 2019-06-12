@@ -1,5 +1,6 @@
 package com.hls.happylifestyle;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -18,6 +19,13 @@ public class CreateNewMenuActivity extends AppCompatActivity {
     AutoCompleteTextView userProteinsSelect, userCarbsSelect, userFatsSelect;
 
     Profile userProfile;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent startIntent = new Intent(getApplicationContext(), com.hls.happylifestyle.MainUserActivity.class);
+        startActivity(startIntent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +138,8 @@ public class CreateNewMenuActivity extends AppCompatActivity {
         mEditor.commit();
         mEditor.putBoolean(getString(R.string.new_menu), true);
         mEditor.commit();
+        mEditor.putBoolean(getString(R.string.key_menu_generated), true);
+        mEditor.commit();
         Toast.makeText(this, "Your manual added macronutrients are updating... + new calories count: " + calories, Toast.LENGTH_SHORT).show();
     }
     public  void automatCreate(View view){
@@ -142,6 +152,8 @@ public class CreateNewMenuActivity extends AppCompatActivity {
         mEditor.putFloat(getString(R.string.user_key_calories_total), userCaloriesAuto);
         mEditor.commit();
         mEditor.putBoolean(getString(R.string.new_menu), true);
+        mEditor.commit();
+        mEditor.putBoolean(getString(R.string.key_menu_generated), true);
         mEditor.commit();
         Toast.makeText(this, "Your macronutrients are updating...", Toast.LENGTH_SHORT).show();
     }

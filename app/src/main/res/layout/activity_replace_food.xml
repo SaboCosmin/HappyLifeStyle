@@ -12,13 +12,13 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/pageName"
+            android:id="@+id/pageNameReplaceFood"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAllCaps="true"
             android:textSize="35sp"
             android:textAlignment="center"
-            android:text="TextView" />
+            android:text="Selected Food" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -90,56 +90,56 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/caloriesTextView_id"
+                    android:id="@+id/caloriesReplace_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:text="TextView"
+                    android:text="0g"
                     android:textAlignment="textEnd"
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/proteinsTextView_id"
+                    android:id="@+id/proteinsReplace_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:text="TextView"
+                    android:text="0g"
                     android:textAlignment="textEnd"
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/carbsTextView_id"
+                    android:id="@+id/carbsReplace_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:text="TextView"
+                    android:text="0g"
                     android:textAlignment="textEnd"
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/sugarTextView_id"
+                    android:id="@+id/sugarReplace_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:text="TextView"
+                    android:text="0g"
                     android:textAlignment="textEnd"
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/fiberTextView_id"
+                    android:id="@+id/fiberReplace_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:text="TextView"
+                    android:text="0g"
                     android:textAlignment="textEnd"
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/fatTextView_id"
+                    android:id="@+id/fatReplace_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:text="TextView"
+                    android:text="0g"
                     android:textAlignment="textEnd"
                     android:textSize="20sp" />
 
@@ -222,6 +222,7 @@
                     android:background="@drawable/box_button"
                     android:gravity="center"
                     android:text="Add"
+                    android:onClick="addFood"
                     android:textAlignment="center"
                     android:textSize="25sp" />
             </LinearLayout>

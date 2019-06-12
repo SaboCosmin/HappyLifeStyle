@@ -33,6 +33,8 @@
     <string name="new_menu">com.hls.happylifestyle.newMenu</string>
 
     <string name="key_first_run">com.hls.happylifestyle.firstRun</string>
+    <string name="key_menu_generated">com.hls.happylifestyle.menuGenerated</string>
+
     <string name="key_name">com.hls.happylifestyle.name</string>
     <string name="key_age">com.hls.happylifestyle.age</string>
     <string name="key_height">com.hls.happylifestyle.height</string>
@@ -84,6 +86,13 @@
     <string name="calories_used_weight">com.hls.happylifestyle.caloriesUsed</string>
     <string name="fiber_used_weight">com.hls.happylifestyle.fiberUsed</string>
     <string name="sugar_used_weight">com.hls.happylifestyle.sugarUsed</string>
+
+    <string name="proteins_calculator">com.hls.happylifestyle.proteinsCalculator</string>
+    <string name="carbs_calculator">com.hls.happylifestyle.carbsCalculator</string>
+    <string name="fats_calculator">com.hls.happylifestyle.fatsCalculator</string>
+    <string name="calories_calculator">com.hls.happylifestyle.caloriesCalculator</string>
+    <string name="fiber_calculator">com.hls.happylifestyle.fiberCalculator</string>
+    <string name="sugar_calculator">com.hls.happylifestyle.sugarCalculator</string>
 
 
     <string name="prompt_email">Email</string>

@@ -70,6 +70,8 @@ public class SeeMenuActivity extends AppCompatActivity {
                 }
                 if(mSharedPreferences.getBoolean(getString(R.string.new_menu), true)){
                     generateMenu();
+                    mEditor.putBoolean(getString(R.string.new_menu), false);
+                    mEditor.commit();
                 }else{
                     getGeneratedMenu();
                 }
@@ -340,25 +342,58 @@ public class SeeMenuActivity extends AppCompatActivity {
 
     public void  replaceButton(View v){
         final Intent startIntent = new Intent(getApplicationContext(), ReplaceFood.class);
-        String whatEat = v.getTag().toString();
+        final String whatEat = v.getTag().toString();
+        final Bundle extras = new Bundle();
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
+                        extras.putString("WHICH_FOOD", whatEat + "_2");
+                        startIntent.putExtras(extras);
                         startActivity(startIntent);
+                        finish();
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
+                        extras.putString("WHICH_FOOD", whatEat + "_1");
+                        startIntent.putExtras(extras);
                         startActivity(startIntent);
+                        finish();
                         break;
                 }
             }
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Chose which food to replace: ").setPositiveButton(whatEat + "_2", dialogClickListener)
-                .setNegativeButton(whatEat + "_1", dialogClickListener).show();
+
+        switch (whatEat){
+            case("breakfast"):
+                builder.setMessage("Chose which food to replace: ").setPositiveButton(breakfast2.getName(), dialogClickListener)
+                        .setNegativeButton(breakfast1.getName(), dialogClickListener).show();
+                break;
+            case("lunch"):
+                builder.setMessage("Chose which food to replace: ").setPositiveButton(lunch2.getName(), dialogClickListener)
+                        .setNegativeButton(lunch1.getName(), dialogClickListener).show();
+                break;
+            case("dinner"):
+                builder.setMessage("Chose which food to replace: ").setPositiveButton(dinner2.getName(), dialogClickListener)
+                        .setNegativeButton(dinner1.getName(), dialogClickListener).show();
+                break;
+            case("snack1"):
+                extras.putString("WHICH_FOOD", "snack1");
+                startIntent.putExtras(extras);
+                startActivity(startIntent);
+                finish();
+                break;
+            case("snack2"):
+                extras.putString("WHICH_FOOD", "snack2");
+                startIntent.putExtras(extras);
+                startActivity(startIntent);
+                finish();
+                break;
+        }
+
     }
 
     public ArrayList<Food> getRandomList(String[] goesWith){
@@ -569,8 +604,6 @@ public class SeeMenuActivity extends AppCompatActivity {
         mEditor.putFloat(getString(R.string.dinner2_weight), dinner2_g);
         mEditor.commit();
 
-        mEditor.putBoolean(getString(R.string.new_menu), false);
-        mEditor.commit();
     }
 
     public void getGeneratedMenu(){
