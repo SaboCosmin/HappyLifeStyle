@@ -140,6 +140,16 @@ public class CreateNewMenuActivity extends AppCompatActivity {
         mEditor.commit();
         mEditor.putBoolean(getString(R.string.key_menu_generated), true);
         mEditor.commit();
+        mEditor.putBoolean(getString(R.string.key_breakfast_consumed), false);
+        mEditor.commit();
+        mEditor.putBoolean(getString(R.string.key_snack1_consumed), false);
+        mEditor.commit();
+        mEditor.putBoolean(getString(R.string.key_snack2_consumed), false);
+        mEditor.commit();
+        mEditor.putBoolean(getString(R.string.key_lunch_consumed), false);
+        mEditor.commit();
+        mEditor.putBoolean(getString(R.string.key_dinner_consumed), false);
+        mEditor.commit();
         Toast.makeText(this, "Your manual added macronutrients are updating... + new calories count: " + calories, Toast.LENGTH_SHORT).show();
     }
     public  void automatCreate(View view){
@@ -154,6 +164,16 @@ public class CreateNewMenuActivity extends AppCompatActivity {
         mEditor.putBoolean(getString(R.string.new_menu), true);
         mEditor.commit();
         mEditor.putBoolean(getString(R.string.key_menu_generated), true);
+        mEditor.commit();
+        mEditor.putBoolean(getString(R.string.key_breakfast_consumed), false);
+        mEditor.commit();
+        mEditor.putBoolean(getString(R.string.key_snack1_consumed), false);
+        mEditor.commit();
+        mEditor.putBoolean(getString(R.string.key_snack2_consumed), false);
+        mEditor.commit();
+        mEditor.putBoolean(getString(R.string.key_lunch_consumed), false);
+        mEditor.commit();
+        mEditor.putBoolean(getString(R.string.key_dinner_consumed), false);
         mEditor.commit();
         Toast.makeText(this, "Your macronutrients are updating...", Toast.LENGTH_SHORT).show();
     }

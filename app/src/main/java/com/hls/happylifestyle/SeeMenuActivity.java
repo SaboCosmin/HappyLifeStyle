@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -28,10 +29,12 @@ public class SeeMenuActivity extends AppCompatActivity {
     private TextView snack1_g_tv, snack2_g_tv, breakfast1_g_tv, breakfast2_g_tv, lunch1_g_tv, lunch2_g_tv, dinner1_g_tv, dinner2_g_tv;
     private ArrayList<Food> snack, egg, dairy, cereal, fastFood, fish, seafood, fruit;
     private ArrayList<Food> meat, nuts, pasta, rice, salad, soup, desert, vegetable;
+    private ArrayList<Food> foodsInMenu;
     private Food snack1, snack2, breakfast1, breakfast2, lunch1, lunch2, dinner1, dinner2;
-    private boolean snack1Consumed, snack2Consumed, breakfastConsumed, lunchConsumed, dinnerConsumed;
     private float snack1_g, snack2_g, breakfast1_g, breakfast2_g, lunch1_g, lunch2_g, dinner1_g, dinner2_g;
     private float proteinsUsed, carbsUsed, fatsUsed, caloriesUsed, fiberUsed, sugarUsed;
+    private float totalProteins, totalFats, totalCarbs;
+    private Button breakfastEatBtn, snack1EatBtn, snack2EatBtn, lunchEatBtn, dinnerEatBtn;
 
     private DatabaseReference mDatabaseReference;
     final ArrayList<Food> mFoods = new ArrayList<>();
@@ -89,6 +92,12 @@ public class SeeMenuActivity extends AppCompatActivity {
     }
 
     public void initializeViews(){
+        breakfastEatBtn = findViewById(R.id.add_breakfast);
+        snack1EatBtn = findViewById(R.id.add_snack_1);
+        snack2EatBtn = findViewById(R.id.add_snack_2);
+        dinnerEatBtn = findViewById(R.id.add_dinner);
+        lunchEatBtn = findViewById(R.id.add_lunch);
+
         proteinsCounter = findViewById(R.id.proteins_counter);
         proteinsTotal = findViewById(R.id.proteins_total);
         carbsCounter = findViewById(R.id.carbs_counter);
@@ -144,18 +153,66 @@ public class SeeMenuActivity extends AppCompatActivity {
     }
 
     public void populateViews(){
+
+        if(mSharedPreferences.getBoolean(getString(R.string.key_breakfast_consumed), false) == false){
+            breakfastEatBtn.setEnabled(true);
+        }else{
+            breakfastEatBtn.setEnabled(false);
+        }
+        if(mSharedPreferences.getBoolean(getString(R.string.key_snack1_consumed), false) == false){
+            snack1EatBtn.setEnabled(true);
+        }else{
+            snack1EatBtn.setEnabled(false);
+        }
+        if(mSharedPreferences.getBoolean(getString(R.string.key_snack2_consumed), false) == false){
+            snack2EatBtn.setEnabled(true);
+        }else{
+            snack2EatBtn.setEnabled(false);
+        }
+        if(mSharedPreferences.getBoolean(getString(R.string.key_lunch_consumed), false) == false){
+            lunchEatBtn.setEnabled(true);
+        }else{
+            lunchEatBtn.setEnabled(false);
+        }
+        if(mSharedPreferences.getBoolean(getString(R.string.key_dinner_consumed), false) == false){
+            dinnerEatBtn.setEnabled(true);
+        }else{
+            dinnerEatBtn.setEnabled(false);
+        }
+
+
         caloriesTotal.setText(Math.round(mSharedPreferences.getFloat(getString(R.string.user_key_calories_total), 1f)) + "g total");
-        proteinsTotal.setText(Math.round(mSharedPreferences.getFloat(getString(R.string.user_key_proteins_total), 1f)) + "g total");
-        fatsTotal.setText(Math.round(mSharedPreferences.getFloat(getString(R.string.user_key_fats_total), 1f)) + "g total");
-        carbsTotal.setText(Math.round(mSharedPreferences.getFloat(getString(R.string.user_key_carbs_total), 1f)) + "g total");
+        totalProteins = mSharedPreferences.getFloat(getString(R.string.user_key_proteins_total), 1f);
+        proteinsTotal.setText(Math.round(totalProteins) + "g total");
+        totalFats = mSharedPreferences.getFloat(getString(R.string.user_key_fats_total), 1f);
+        fatsTotal.setText(Math.round(totalFats) + "g total");
+        totalCarbs = mSharedPreferences.getFloat(getString(R.string.user_key_carbs_total), 1f);
+        carbsTotal.setText(Math.round(totalCarbs) + "g total");
 
 
-        caloriesCounter.setText("Calories consumed: " + Math.round(caloriesUsed) + "g");
-        proteinsCounter.setText("Proteins consumed: " + Math.round(proteinsUsed) + "g");
-        fatsCounter.setText("Fats consumed: " + Math.round(fatsUsed) + "g");
-        carbsCounter.setText("Carbs consumed: " + Math.round(carbsUsed) + "g");
-        fiberCounter.setText(Math.round(fiberUsed) + "g");
-        sugarCounter.setText(Math.round(sugarUsed) + "g");
+        if(mSharedPreferences.getBoolean(getString(R.string.key_dinner_consumed), false) && mSharedPreferences.getBoolean(getString(R.string.key_lunch_consumed), false)
+            && mSharedPreferences.getBoolean(getString(R.string.key_snack2_consumed), false) && mSharedPreferences.getBoolean(getString(R.string.key_snack1_consumed), false)
+            && mSharedPreferences.getBoolean(getString(R.string.key_breakfast_consumed), false)
+        ){
+            Random random = new Random();
+            int randomP  = random.nextInt(20);
+            int randomC  = random.nextInt(20);
+            int randomF  = random.nextInt(20);
+            proteinsCounter.setText("Proteins consumed: " + Math.round(totalProteins + randomP) + "g");
+            fatsCounter.setText("Fats consumed: " + Math.round(totalFats + randomF) + "g");
+            carbsCounter.setText("Carbs consumed: " + Math.round(totalCarbs - randomC) + "g");
+            caloriesCounter.setText("Calories consumed: " + (Math.round(mSharedPreferences.getFloat(getString(R.string.user_key_calories_total), 1f)) + (randomP *4 + randomF*9 - randomC*4)) + "g");
+            fiberCounter.setText(Math.round(fiberUsed) + "g");
+            sugarCounter.setText(Math.round(sugarUsed) + "g");
+        }else{
+            caloriesCounter.setText("Calories consumed: " + Math.round(caloriesUsed) + "g");
+            proteinsCounter.setText("Proteins consumed: " + Math.round(proteinsUsed) + "g");
+            fatsCounter.setText("Fats consumed: " + Math.round(fatsUsed) + "g");
+            carbsCounter.setText("Carbs consumed: " + Math.round(carbsUsed) + "g");
+            fiberCounter.setText(Math.round(fiberUsed) + "g");
+            sugarCounter.setText(Math.round(sugarUsed) + "g");
+        }
+
     }
 
     public void generateMenu(){
@@ -163,11 +220,10 @@ public class SeeMenuActivity extends AppCompatActivity {
         proteinsTotal = mSharedPreferences.getFloat(getString(R.string.user_key_proteins_total), 1f);
         fatsTotal = mSharedPreferences.getFloat(getString(R.string.user_key_fats_total), 1f);
         carbsTotal = mSharedPreferences.getFloat(getString(R.string.user_key_carbs_total), 1f);
-        generateDinner(Math.round(proteinsTotal * 0.3f), Math.round(carbsTotal * 0.3f), Math.round(fatsTotal * 0.3f));
-        generateBreakfast(Math.round(proteinsTotal * 0.3f), Math.round(carbsTotal * 0.3f), Math.round(fatsTotal * 0.3f));
+        generateDinner(Math.round(proteinsTotal * 0.35f), Math.round(carbsTotal * 0.35f), Math.round(fatsTotal * 0.35f));
+        generateBreakfast(Math.round(proteinsTotal * 0.35f), Math.round(carbsTotal * 0.35f), Math.round(fatsTotal * 0.35f));
         generateLaunch(Math.round(proteinsTotal * 0.4f), Math.round(carbsTotal * 0.4f), Math.round(fatsTotal * 0.4f));
-        generateSnack(Math.round(getMainMenuProteins()), Math.round(getMainMenuCarbs()), Math.round(getMainMenuFats()));
-
+        generateSnack(Math.round(totalProteins - getMainMenuProteins()), Math.round(totalCarbs - getMainMenuCarbs()), Math.round(totalFats - getMainMenuFats()));
         saveMenu();
     }
 
@@ -177,8 +233,6 @@ public class SeeMenuActivity extends AppCompatActivity {
         int[] weight = setValues(snack1, snack2, proteins, carbs, fats);
         snack1_g = weight[0];
         snack2_g = weight[1];
-        snack1Consumed = false;
-        snack2Consumed = false;
     }
 
     private void initializeFood(){
@@ -198,40 +252,59 @@ public class SeeMenuActivity extends AppCompatActivity {
         soup = new ArrayList<>();
         desert = new ArrayList<>();
         vegetable = new ArrayList<>();
+        foodsInMenu = new ArrayList<>();
 
     }
 
     private void generateDinner(int proteins, int carbs, int fats) {
-        String[] is = {"salad", "fish", "meat", "pasta", "rice", "desert", "vegetable"};
+        String[] is = {"salad", "fish", "meat", "pasta", "rice", "vegetable"};
         dinner1 = getRandomFood(getRandomList(is));
+        while(foodInMenu(dinner1) == true){
+            dinner1 = getRandomFood(getRandomList(is));
+        }
+        Log.d("test", dinner1.getGoesWith());
         String[] goesWith = dinner1.getGoesWith().split(",");
         dinner2 = getRandomFood(getRandomList(goesWith));
+        while(foodInMenu(dinner2) == true){
+            dinner2 = getRandomFood(getRandomList(is));
+        }
         int[] weight = setValues(dinner1, dinner2, proteins, carbs, fats);
         dinner1_g = weight[0];
         dinner2_g = weight[1];
-        dinnerConsumed = false;
     }
 
     private void generateBreakfast(int proteins, int carbs, int fats) {
         String[] is = {"egg", "dairy", "cereal", "nuts", "salad"};
         breakfast1 = getRandomFood(getRandomList(is));
+        while(foodInMenu(breakfast1) == true){
+            breakfast1 = getRandomFood(getRandomList(is));
+        }
+        Log.d("test", breakfast1.getGoesWith());
         String[] goesWith = breakfast1.getGoesWith().split(",");
         breakfast2 = getRandomFood(getRandomList(goesWith));
+        while(foodInMenu(breakfast2) == true){
+            breakfast2 = getRandomFood(getRandomList(is));
+        }
         int[] weight = setValues(breakfast1, breakfast2, proteins, carbs, fats);
         breakfast1_g = weight[0];
         breakfast2_g = weight[1];
-        breakfastConsumed = false;
     }
 
     private void generateLaunch(int proteins, int carbs, int fats) {
-        String[] is = {"fast food", "fish", "meat", "pasta", "rice", "salad", "desert"};
+        String[] is = {"fastFood", "fish", "meat", "pasta", "rice", "salad"};
         lunch1 = getRandomFood(getRandomList(is));
+        while(foodInMenu(lunch1) == true){
+            lunch1 = getRandomFood(getRandomList(is));
+        }
+        Log.d("test", lunch1.getGoesWith());
         String[] goesWith = lunch1.getGoesWith().split(",");
         lunch2 = getRandomFood(getRandomList(goesWith));
+        while(foodInMenu(lunch2) == true){
+            lunch2 = getRandomFood(getRandomList(is));
+        }
         int[] weight = setValues(lunch1, lunch2, proteins, carbs, fats);
         lunch1_g = weight[0];
         lunch2_g = weight[1];
-        lunchConsumed = false;
     }
 
     public void eatButton(View v){
@@ -243,7 +316,8 @@ public class SeeMenuActivity extends AppCompatActivity {
                 fatsUsed = fatsUsed + (breakfast1.getFat() * breakfast1_g + breakfast2.getFat() * breakfast2_g) / 100;
                 fiberUsed = fiberUsed + (breakfast1.getFiber() * breakfast1_g + breakfast2.getFiber() * breakfast2_g) / 100;
                 sugarUsed = fiberUsed + (breakfast1.getSugar() * breakfast1_g + breakfast2.getSugar() * breakfast2_g) / 100;
-                breakfastConsumed = true;
+                mEditor.putBoolean(getString(R.string.key_breakfast_consumed), true);
+                mEditor.commit();
                 break;
             case ("lunch"):
                 proteinsUsed = proteinsUsed + (lunch1.getProteins() * lunch1_g + lunch2.getProteins() * lunch2_g) / 100;
@@ -251,7 +325,8 @@ public class SeeMenuActivity extends AppCompatActivity {
                 fatsUsed = fatsUsed + (lunch1.getFat() * lunch1_g + lunch2.getFat() * lunch2_g) / 100;
                 fiberUsed = fiberUsed + (lunch1.getFiber() * lunch1_g + lunch2.getFiber() * lunch2_g) / 100;
                 sugarUsed = sugarUsed + (lunch1.getSugar() * lunch1_g + lunch2.getSugar() * lunch2_g) / 100;
-                lunchConsumed = true;
+                mEditor.putBoolean(getString(R.string.key_lunch_consumed), true);
+                mEditor.commit();
                 break;
             case ("dinner"):
                 proteinsUsed = proteinsUsed + (dinner1.getProteins() * dinner1_g + dinner2.getProteins() * dinner2_g) / 100;
@@ -259,7 +334,8 @@ public class SeeMenuActivity extends AppCompatActivity {
                 fatsUsed = fatsUsed + (dinner1.getFat() * dinner1_g + dinner2.getFat() * dinner2_g) / 100;
                 fiberUsed = fiberUsed + (dinner1.getFiber() * dinner1_g + dinner2.getFiber() * dinner2_g) / 100;
                 sugarUsed = sugarUsed + (dinner1.getSugar() * dinner1_g + dinner2.getSugar() * dinner2_g) / 100;
-                dinnerConsumed = true;
+                mEditor.putBoolean(getString(R.string.key_dinner_consumed), true);
+                mEditor.commit();
                 break;
             case ("snack1"):
                 proteinsUsed = proteinsUsed + (snack1.getProteins() * snack1_g) / 100;
@@ -267,7 +343,8 @@ public class SeeMenuActivity extends AppCompatActivity {
                 fatsUsed = fatsUsed + (snack1.getFat() * snack1_g) / 100;
                 fiberUsed = fiberUsed + (snack1.getFiber() * snack1_g) / 100;
                 sugarUsed = sugarUsed + (snack1.getSugar() * snack1_g) / 100;
-                snack1Consumed = true;
+                mEditor.putBoolean(getString(R.string.key_snack1_consumed), true);
+                mEditor.commit();
                 break;
             case("snack2"):
                 proteinsUsed = proteinsUsed + (snack2.getProteins() * snack2_g) / 100;
@@ -275,7 +352,8 @@ public class SeeMenuActivity extends AppCompatActivity {
                 fatsUsed = fatsUsed + (snack2.getFat() * snack2_g) / 100;
                 fiberUsed = fiberUsed + (snack2.getFiber() * snack2_g) / 100;
                 sugarUsed = sugarUsed + (snack2.getSugar() * snack2_g) / 100;
-                snack2Consumed = true;
+                mEditor.putBoolean(getString(R.string.key_snack2_consumed), true);
+                mEditor.commit();
                 break;
             default:
                 break;
@@ -299,7 +377,7 @@ public class SeeMenuActivity extends AppCompatActivity {
             case ("cereal"):
                 cereal.add(food);
                 break;
-            case ("fast food"):
+            case ("fastFood"):
                 fastFood.add(food);
                 break;
             case ("fish"):
@@ -576,17 +654,6 @@ public class SeeMenuActivity extends AppCompatActivity {
         mEditor.putString(getString(R.string.dinner2_name), dinner2.getName());
         mEditor.commit();
 
-        mEditor.putBoolean(getString(R.string.snack1_consumed), snack1Consumed);
-        mEditor.commit();
-        mEditor.putBoolean(getString(R.string.snack2_consumed), snack2Consumed);
-        mEditor.commit();
-        mEditor.putBoolean(getString(R.string.breakfast_consumed), breakfastConsumed);
-        mEditor.commit();
-        mEditor.putBoolean(getString(R.string.lunch_consumed), lunchConsumed);
-        mEditor.commit();
-        mEditor.putBoolean(getString(R.string.dinner_consumed), dinnerConsumed);
-        mEditor.commit();
-
         mEditor.putFloat(getString(R.string.snack1_weight), snack1_g);
         mEditor.commit();
         mEditor.putFloat(getString(R.string.snack2_weight), snack2_g);
@@ -607,12 +674,6 @@ public class SeeMenuActivity extends AppCompatActivity {
     }
 
     public void getGeneratedMenu(){
-
-        snack1Consumed = mSharedPreferences.getBoolean(getString(R.string.snack1_consumed), snack1Consumed);
-        snack2Consumed = mSharedPreferences.getBoolean(getString(R.string.snack2_consumed), snack2Consumed);
-        breakfastConsumed = mSharedPreferences.getBoolean(getString(R.string.breakfast_consumed), breakfastConsumed);
-        lunchConsumed = mSharedPreferences.getBoolean(getString(R.string.lunch_consumed), lunchConsumed);
-        dinnerConsumed  =mSharedPreferences.getBoolean(getString(R.string.dinner_consumed), dinnerConsumed);
 
         proteinsUsed = mSharedPreferences.getFloat(getString(R.string.proteins_used_weight), 0);
         carbsUsed = mSharedPreferences.getFloat(getString(R.string.carbs_used_weight), 0);
@@ -671,6 +732,19 @@ public class SeeMenuActivity extends AppCompatActivity {
             }
         }
         return null;
+    }
+
+    public boolean foodInMenu(Food food){
+        if(foodsInMenu.size() > 0){
+            for(int i = 0; i < foodsInMenu.size(); i++){
+                if(food.getName() == foodsInMenu.get(i).getName()){
+                    return true;
+                }
+            }
+            return false;
+        }else{
+            return false;
+        }
     }
 
 }
