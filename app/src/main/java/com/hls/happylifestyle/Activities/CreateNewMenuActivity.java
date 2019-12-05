@@ -1,4 +1,4 @@
-package com.hls.happylifestyle;
+package com.hls.happylifestyle.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.hls.happylifestyle.Classes.Profile;
+import com.hls.happylifestyle.R;
 
 public class CreateNewMenuActivity extends AppCompatActivity {
     private SharedPreferences mSharedPreferences;
@@ -23,7 +26,7 @@ public class CreateNewMenuActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent startIntent = new Intent(getApplicationContext(), com.hls.happylifestyle.MainUserActivity.class);
+        Intent startIntent = new Intent(getApplicationContext(), MainUserActivity.class);
         startActivity(startIntent);
     }
 
@@ -77,7 +80,7 @@ public class CreateNewMenuActivity extends AppCompatActivity {
         }else{
             result = 10 * userProfile.getWeight() + 6.25f * userProfile.getHeight() - 5 * userProfile.getAge() + 5;
         }
-        switch (userProfile.getActivity_level()){
+        switch (userProfile.getActivityLevel()){
             case 0: result = result  * 1.1f;
                 break;
             case 1: result = result  * 1.2f;

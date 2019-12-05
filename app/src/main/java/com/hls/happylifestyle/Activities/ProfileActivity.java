@@ -1,4 +1,4 @@
-package com.hls.happylifestyle;
+package com.hls.happylifestyle.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +17,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hls.happylifestyle.Classes.Profile;
+import com.hls.happylifestyle.R;
+
 public class ProfileActivity extends AppCompatActivity {
 
     private SharedPreferences mSharedPreferences;
@@ -34,7 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent startIntent = new Intent(getApplicationContext(), com.hls.happylifestyle.MainUserActivity.class);
+        Intent startIntent = new Intent(getApplicationContext(), MainUserActivity.class);
         startActivity(startIntent);
     }
 
@@ -122,10 +125,10 @@ public class ProfileActivity extends AppCompatActivity {
         String gender = genderRadioButton.getText().toString();
         String purpose = purposeRadioButton.getText().toString();
 
-        String activity_level_text = activityLevelSpinner.getSelectedItem().toString();
-        int activity_level = Integer.parseInt(activity_level_text.replaceAll("[\\D]", ""));
+        String activityLevelText = activityLevelSpinner.getSelectedItem().toString();
+        int activityLevel = Integer.parseInt(activityLevelText.replaceAll("[\\D]", ""));
 
-        userProfile = new Profile(name, gender, age, activity_level, height, weight, purpose);
+        userProfile = new Profile(name, gender, age, activityLevel, height, weight, purpose);
         saveSharedPreferences(userProfile);
         finish();
         startActivity(getIntent());
@@ -138,7 +141,7 @@ public class ProfileActivity extends AppCompatActivity {
         mEditor.commit();
         mEditor.putString(getString(R.string.key_age), Integer.toString(profile.getAge()));
         mEditor.commit();
-        mEditor.putString(getString(R.string.key_activity), Integer.toString(profile.getActivity_level()));
+        mEditor.putString(getString(R.string.key_activity), Integer.toString(profile.getActivityLevel()));
         mEditor.commit();
         mEditor.putString(getString(R.string.key_height), Integer.toString(profile.getHeight()));
         mEditor.commit();
@@ -155,12 +158,12 @@ public class ProfileActivity extends AppCompatActivity {
         String name = mSharedPreferences.getString(getString(R.string.key_name), "DefaultName");
         String gender = mSharedPreferences.getString(getString(R.string.key_gender), "Female");
         int age = Integer.parseInt(mSharedPreferences.getString(getString(R.string.key_age), "30"));
-        int activity_level = Integer.parseInt(mSharedPreferences.getString(getString(R.string.key_activity), "0"));
+        int activityLevel = Integer.parseInt(mSharedPreferences.getString(getString(R.string.key_activity), "0"));
         int height = Integer.parseInt(mSharedPreferences.getString(getString(R.string.key_height), "180"));
         float weight = Float.parseFloat(mSharedPreferences.getString(getString(R.string.key_weight), "80f"));
         String purpose = mSharedPreferences.getString(getString(R.string.key_purpose), "DefaultName");
 
-        userProfile = new Profile(name, gender, age, activity_level, height, weight, purpose);
+        userProfile = new Profile(name, gender, age, activityLevel, height, weight, purpose);
     }
 
     public void editPressed(View v){
@@ -183,7 +186,7 @@ public class ProfileActivity extends AppCompatActivity {
             purposeLayout.setVisibility(LinearLayout.GONE);
             activityLayout.setVisibility(LinearLayout.GONE);
             pickedGender.setText(userProfile.getGender());
-            pickedActivity.setText("Act lvl: " + userProfile.getActivity_level());
+            pickedActivity.setText("Act lvl: " + userProfile.getActivityLevel());
             pickedPurpose.setText(userProfile.getPurpose());
 
         }else{

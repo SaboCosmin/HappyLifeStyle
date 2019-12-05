@@ -1,4 +1,4 @@
-package com.hls.happylifestyle;
+package com.hls.happylifestyle.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +13,10 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.hls.happylifestyle.Classes.Carbohydrate;
+import com.hls.happylifestyle.Classes.Food;
+import com.hls.happylifestyle.Classes.Macronutrient;
+import com.hls.happylifestyle.R;
 
 public class AddFoodActivity extends AppCompatActivity {
     AutoCompleteTextView foodName, foodDescription, foodCalories, foodProteins, foodCarbs;
@@ -44,7 +48,7 @@ public class AddFoodActivity extends AppCompatActivity {
     public void uploadFood(View v){
         String name = foodName.getText().toString();
         String description = foodDescription.getText().toString();
-        String food_type_text = foodTypeSpinner.getSelectedItem().toString();
+        String foodTypeText = foodTypeSpinner.getSelectedItem().toString();
 
         int calories = Integer.parseInt(foodCalories.getText().toString());
         int proteins = Integer.parseInt(foodProteins.getText().toString());
@@ -54,17 +58,18 @@ public class AddFoodActivity extends AppCompatActivity {
         int fat = Integer.parseInt(foodFat.getText().toString());
         int price = 1;
         int timeToPrepare = 1;
-        int min = Integer.parseInt(foodMinWeight.getText().toString());
-        int max = Integer.parseInt(foodMaxWeight.getText().toString());
+        int minWeight = Integer.parseInt(foodMinWeight.getText().toString());
+        int maxWeight = Integer.parseInt(foodMaxWeight.getText().toString());
 
-        if(getGoesWith() == "0"){
+        if(getGoesWith().equals("0")){
             Toast.makeText(this, "Please select one of the CheckBoxes", Toast.LENGTH_SHORT).show();
         }else{
             String goesWith = getGoesWith();
             Log.d("test", goesWith);
+            Carbohydrate carbohydrate = new Carbohydrate(carbs, sugar, fiber);
+            Macronutrient macronutrient = new Macronutrient(proteins, fat,carbohydrate);
 
-            Food food = new Food(name, description, food_type_text, goesWith, calories, proteins,
-                    carbs, sugar, fiber, fat, price, timeToPrepare, min, max);
+            Food food = new Food(name, description, foodTypeText, goesWith, calories, price, timeToPrepare, minWeight, maxWeight,macronutrient);
             mDatabase.child("foods").push().setValue(food);
             Toast.makeText(this, "Your food was added to the Database", Toast.LENGTH_SHORT).show();
         }

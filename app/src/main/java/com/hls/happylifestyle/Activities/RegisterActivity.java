@@ -1,4 +1,4 @@
-package com.hls.happylifestyle;
+package com.hls.happylifestyle.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.hls.happylifestyle.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -49,7 +50,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    // Executed when Sign Up button is pressed.
     public void signUp(View v) {
         attemptRegistration();
     }
@@ -117,8 +117,6 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-
-    // TODO: Create an alert dialog to show in case registration failed
     private void showErrorDialog(String message){
         new AlertDialog.Builder(this)
                 .setTitle("Oops")

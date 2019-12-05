@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_weight="1"
     android:orientation="vertical"
-    tools:context=".AddFoodActivity">
+    tools:context=".Activities.AddFoodActivity">
 
 
     <TextView
@@ -125,7 +125,7 @@
                 android:id="@+id/carbsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Food carbs: "
+                android:text="Food carbohydrate: "
                 android:textColor="#000000"
                 android:textSize="25sp" />
 

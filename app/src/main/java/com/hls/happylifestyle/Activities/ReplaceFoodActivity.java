@@ -1,4 +1,4 @@
-package com.hls.happylifestyle;
+package com.hls.happylifestyle.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,10 +19,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hls.happylifestyle.Activities.SeeMenuActivity;
+import com.hls.happylifestyle.Adapters.FoodListAdapter;
+import com.hls.happylifestyle.Classes.Food;
+import com.hls.happylifestyle.R;
 
 import java.util.ArrayList;
 
-public class ReplaceFood extends AppCompatActivity {
+public class ReplaceFoodActivity extends AppCompatActivity {
     TextView pageName,foodCalories, foodProteins, foodFiber, foodFat;
     TextView foodCarbs, foodSugar;
     AutoCompleteTextView quantityTextView;
@@ -38,7 +42,7 @@ public class ReplaceFood extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent startIntent = new Intent(getApplicationContext(), com.hls.happylifestyle.SeeMenuActivity.class);
+        Intent startIntent = new Intent(getApplicationContext(), SeeMenuActivity.class);
         startActivity(startIntent);
     }
 
@@ -153,7 +157,7 @@ public class ReplaceFood extends AppCompatActivity {
     }
 
     public void applyQuantity(View v){
-        if (quantityTextView.getText().toString() != ""){
+        if (!quantityTextView.getText().toString().equals("")){
             Log.d("test", quantityTextView.getText().toString());
             foodQuantity = Float.parseFloat(quantityTextView.getText().toString()) / 100;
             populate();
@@ -165,11 +169,11 @@ public class ReplaceFood extends AppCompatActivity {
         if(mFood != null) {
             pageName.setText(mFood.getName() + "");
             foodCalories.setText(foodQuantity * mFood.getCalories() + "");
-            foodProteins.setText(foodQuantity * mFood.getProteins() + "");
-            foodCarbs.setText(foodQuantity * mFood.getCarbs() + "");
-            foodSugar.setText(foodQuantity * mFood.getSugar() + "");
-            foodFiber.setText(foodQuantity * mFood.getFiber() + "");
-            foodFat.setText(foodQuantity * mFood.getFat() + "");
+            foodProteins.setText(foodQuantity * mFood.getMacros().getProteins() + "");
+            foodCarbs.setText(foodQuantity * mFood.getMacros().getCarbohydrate().getCarbs() + "");
+            foodSugar.setText(foodQuantity * mFood.getMacros().getCarbohydrate().getSugar() + "");
+            foodFiber.setText(foodQuantity * mFood.getMacros().getCarbohydrate().getFiber() + "");
+            foodFat.setText(foodQuantity * mFood.getMacros().getFat() + "");
         }
     }
 }

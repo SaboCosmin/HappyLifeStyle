@@ -1,4 +1,4 @@
-package com.hls.happylifestyle;
+package com.hls.happylifestyle.Activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,13 +18,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hls.happylifestyle.Classes.Food;
+import com.hls.happylifestyle.R;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class SeeMenuActivity extends AppCompatActivity {
     private TextView proteinsCounter, proteinsTotal, carbsCounter, carbsTotal, fatsCounter, fatsTotal;
-    private TextView fiberCounter, sugarCounter,caloriesCounter, caloriesTotal;
+    private TextView fiberCounter, sugarCounter, caloriesCounter, caloriesTotal;
     private TextView snack1_tv, snack2_tv, breakfast1_tv, breakfast2_tv, lunch1_tv, lunch2_tv, dinner1_tv, dinner2_tv;
     private TextView snack1_g_tv, snack2_g_tv, breakfast1_g_tv, breakfast2_g_tv, lunch1_g_tv, lunch2_g_tv, dinner1_g_tv, dinner2_g_tv;
     private ArrayList<Food> snack, egg, dairy, cereal, fastFood, fish, seafood, fruit;
@@ -36,7 +38,6 @@ public class SeeMenuActivity extends AppCompatActivity {
     private float totalProteins, totalFats, totalCarbs;
     private Button breakfastEatBtn, snack1EatBtn, snack2EatBtn, lunchEatBtn, dinnerEatBtn;
 
-    private DatabaseReference mDatabaseReference;
     final ArrayList<Food> mFoods = new ArrayList<>();
 
     private SharedPreferences mSharedPreferences;
@@ -47,13 +48,13 @@ public class SeeMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_menu);
 
-        if (getIntent().hasExtra("pageNameActivity")){
+        if (getIntent().hasExtra("pageNameActivity")) {
             TextView pageName = findViewById(R.id.pageName);
             String text = getIntent().getExtras().getString("pageNameActivity");
             pageName.setText(text);
         }
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("foods");
+        DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("foods");
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mSharedPreferences.edit();
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
@@ -61,21 +62,21 @@ public class SeeMenuActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
 
-                for(DataSnapshot child : children){
+                for (DataSnapshot child : children) {
                     Food value = child.getValue(Food.class);
                     mFoods.add(value);
                 }
-                for (Food food : mFoods){
+                for (Food food : mFoods) {
                     String[] type = food.getType().split(",");
-                    for(int i = 0; i< type.length; i++){
-                        putFood(food, type[i]);
+                    for (String fType : type) {
+                        putFood(food, fType);
                     }
                 }
-                if(mSharedPreferences.getBoolean(getString(R.string.new_menu), true)){
+                if (mSharedPreferences.getBoolean(getString(R.string.new_menu), true)) {
                     generateMenu();
                     mEditor.putBoolean(getString(R.string.new_menu), false);
-                    mEditor.commit();
-                }else{
+                    mEditor.apply();
+                } else {
                     getGeneratedMenu();
                 }
 
@@ -83,6 +84,7 @@ public class SeeMenuActivity extends AppCompatActivity {
                 populateViews();
                 populateMenu();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -91,7 +93,7 @@ public class SeeMenuActivity extends AppCompatActivity {
         initializeFood();
     }
 
-    public void initializeViews(){
+    public void initializeViews() {
         breakfastEatBtn = findViewById(R.id.add_breakfast);
         snack1EatBtn = findViewById(R.id.add_snack_1);
         snack2EatBtn = findViewById(R.id.add_snack_2);
@@ -130,7 +132,7 @@ public class SeeMenuActivity extends AppCompatActivity {
         snack2_g_tv = findViewById(R.id.snack2_weight);
     }
 
-    public void populateMenu(){
+    public void populateMenu() {
         breakfast1_tv.setText(breakfast1.getName());
         breakfast2_tv.setText(breakfast2.getName());
         breakfast1_g_tv.setText(Math.round(breakfast1_g) + "g");
@@ -152,31 +154,31 @@ public class SeeMenuActivity extends AppCompatActivity {
         snack2_g_tv.setText(Math.round(snack2_g) + "g");
     }
 
-    public void populateViews(){
+    public void populateViews() {
 
-        if(mSharedPreferences.getBoolean(getString(R.string.key_breakfast_consumed), false) == false){
+        if (mSharedPreferences.getBoolean(getString(R.string.key_breakfast_consumed), false) == false) {
             breakfastEatBtn.setEnabled(true);
-        }else{
+        } else {
             breakfastEatBtn.setEnabled(false);
         }
-        if(mSharedPreferences.getBoolean(getString(R.string.key_snack1_consumed), false) == false){
+        if (mSharedPreferences.getBoolean(getString(R.string.key_snack1_consumed), false) == false) {
             snack1EatBtn.setEnabled(true);
-        }else{
+        } else {
             snack1EatBtn.setEnabled(false);
         }
-        if(mSharedPreferences.getBoolean(getString(R.string.key_snack2_consumed), false) == false){
+        if (mSharedPreferences.getBoolean(getString(R.string.key_snack2_consumed), false) == false) {
             snack2EatBtn.setEnabled(true);
-        }else{
+        } else {
             snack2EatBtn.setEnabled(false);
         }
-        if(mSharedPreferences.getBoolean(getString(R.string.key_lunch_consumed), false) == false){
+        if (mSharedPreferences.getBoolean(getString(R.string.key_lunch_consumed), false) == false) {
             lunchEatBtn.setEnabled(true);
-        }else{
+        } else {
             lunchEatBtn.setEnabled(false);
         }
-        if(mSharedPreferences.getBoolean(getString(R.string.key_dinner_consumed), false) == false){
+        if (mSharedPreferences.getBoolean(getString(R.string.key_dinner_consumed), false) == false) {
             dinnerEatBtn.setEnabled(true);
-        }else{
+        } else {
             dinnerEatBtn.setEnabled(false);
         }
 
@@ -190,21 +192,21 @@ public class SeeMenuActivity extends AppCompatActivity {
         carbsTotal.setText(Math.round(totalCarbs) + "g total");
 
 
-        if(mSharedPreferences.getBoolean(getString(R.string.key_dinner_consumed), false) && mSharedPreferences.getBoolean(getString(R.string.key_lunch_consumed), false)
-            && mSharedPreferences.getBoolean(getString(R.string.key_snack2_consumed), false) && mSharedPreferences.getBoolean(getString(R.string.key_snack1_consumed), false)
-            && mSharedPreferences.getBoolean(getString(R.string.key_breakfast_consumed), false)
-        ){
+        if (mSharedPreferences.getBoolean(getString(R.string.key_dinner_consumed), false) && mSharedPreferences.getBoolean(getString(R.string.key_lunch_consumed), false)
+                && mSharedPreferences.getBoolean(getString(R.string.key_snack2_consumed), false) && mSharedPreferences.getBoolean(getString(R.string.key_snack1_consumed), false)
+                && mSharedPreferences.getBoolean(getString(R.string.key_breakfast_consumed), false)
+        ) {
             Random random = new Random();
-            int randomP  = random.nextInt(20);
-            int randomC  = random.nextInt(20);
-            int randomF  = random.nextInt(20);
+            int randomP = random.nextInt(20);
+            int randomC = random.nextInt(20);
+            int randomF = random.nextInt(20);
             proteinsCounter.setText("Proteins consumed: " + Math.round(totalProteins + randomP) + "g");
             fatsCounter.setText("Fats consumed: " + Math.round(totalFats + randomF) + "g");
             carbsCounter.setText("Carbs consumed: " + Math.round(totalCarbs - randomC) + "g");
-            caloriesCounter.setText("Calories consumed: " + (Math.round(mSharedPreferences.getFloat(getString(R.string.user_key_calories_total), 1f)) + (randomP *4 + randomF*9 - randomC*4)) + "g");
+            caloriesCounter.setText("Calories consumed: " + (Math.round(mSharedPreferences.getFloat(getString(R.string.user_key_calories_total), 1f)) + (randomP * 4 + randomF * 9 - randomC * 4)) + "g");
             fiberCounter.setText(Math.round(fiberUsed) + "g");
             sugarCounter.setText(Math.round(sugarUsed) + "g");
-        }else{
+        } else {
             caloriesCounter.setText("Calories consumed: " + Math.round(caloriesUsed) + "g");
             proteinsCounter.setText("Proteins consumed: " + Math.round(proteinsUsed) + "g");
             fatsCounter.setText("Fats consumed: " + Math.round(fatsUsed) + "g");
@@ -215,7 +217,7 @@ public class SeeMenuActivity extends AppCompatActivity {
 
     }
 
-    public void generateMenu(){
+    public void generateMenu() {
         float proteinsTotal, fatsTotal, carbsTotal;
         proteinsTotal = mSharedPreferences.getFloat(getString(R.string.user_key_proteins_total), 1f);
         fatsTotal = mSharedPreferences.getFloat(getString(R.string.user_key_fats_total), 1f);
@@ -235,7 +237,7 @@ public class SeeMenuActivity extends AppCompatActivity {
         snack2_g = weight[1];
     }
 
-    private void initializeFood(){
+    private void initializeFood() {
         snack = new ArrayList<>();
         egg = new ArrayList<>();
         dairy = new ArrayList<>();
@@ -259,13 +261,13 @@ public class SeeMenuActivity extends AppCompatActivity {
     private void generateDinner(int proteins, int carbs, int fats) {
         String[] is = {"salad", "fish", "meat", "pasta", "rice", "vegetable"};
         dinner1 = getRandomFood(getRandomList(is));
-        while(foodInMenu(dinner1) == true){
+        while (foodInMenu(dinner1)) {
             dinner1 = getRandomFood(getRandomList(is));
         }
         Log.d("test", dinner1.getGoesWith());
         String[] goesWith = dinner1.getGoesWith().split(",");
         dinner2 = getRandomFood(getRandomList(goesWith));
-        while(foodInMenu(dinner2) == true){
+        while (foodInMenu(dinner2)) {
             dinner2 = getRandomFood(getRandomList(is));
         }
         int[] weight = setValues(dinner1, dinner2, proteins, carbs, fats);
@@ -276,13 +278,13 @@ public class SeeMenuActivity extends AppCompatActivity {
     private void generateBreakfast(int proteins, int carbs, int fats) {
         String[] is = {"egg", "dairy", "cereal", "nuts", "salad"};
         breakfast1 = getRandomFood(getRandomList(is));
-        while(foodInMenu(breakfast1) == true){
+        while (foodInMenu(breakfast1)) {
             breakfast1 = getRandomFood(getRandomList(is));
         }
         Log.d("test", breakfast1.getGoesWith());
         String[] goesWith = breakfast1.getGoesWith().split(",");
         breakfast2 = getRandomFood(getRandomList(goesWith));
-        while(foodInMenu(breakfast2) == true){
+        while (foodInMenu(breakfast2)) {
             breakfast2 = getRandomFood(getRandomList(is));
         }
         int[] weight = setValues(breakfast1, breakfast2, proteins, carbs, fats);
@@ -293,13 +295,13 @@ public class SeeMenuActivity extends AppCompatActivity {
     private void generateLaunch(int proteins, int carbs, int fats) {
         String[] is = {"fastFood", "fish", "meat", "pasta", "rice", "salad"};
         lunch1 = getRandomFood(getRandomList(is));
-        while(foodInMenu(lunch1) == true){
+        while (foodInMenu(lunch1)) {
             lunch1 = getRandomFood(getRandomList(is));
         }
         Log.d("test", lunch1.getGoesWith());
         String[] goesWith = lunch1.getGoesWith().split(",");
         lunch2 = getRandomFood(getRandomList(goesWith));
-        while(foodInMenu(lunch2) == true){
+        while (foodInMenu(lunch2)) {
             lunch2 = getRandomFood(getRandomList(is));
         }
         int[] weight = setValues(lunch1, lunch2, proteins, carbs, fats);
@@ -307,51 +309,51 @@ public class SeeMenuActivity extends AppCompatActivity {
         lunch2_g = weight[1];
     }
 
-    public void eatButton(View v){
+    public void eatButton(View v) {
         String whatEat = v.getTag().toString();
-        switch (whatEat){
+        switch (whatEat) {
             case ("breakfast"):
-                proteinsUsed = proteinsUsed + (breakfast1.getProteins() * breakfast1_g + breakfast2.getProteins() * breakfast2_g) / 100;
-                carbsUsed = carbsUsed + (breakfast1.getCarbs() * breakfast1_g + breakfast2.getCarbs() * breakfast2_g) / 100;
-                fatsUsed = fatsUsed + (breakfast1.getFat() * breakfast1_g + breakfast2.getFat() * breakfast2_g) / 100;
-                fiberUsed = fiberUsed + (breakfast1.getFiber() * breakfast1_g + breakfast2.getFiber() * breakfast2_g) / 100;
-                sugarUsed = fiberUsed + (breakfast1.getSugar() * breakfast1_g + breakfast2.getSugar() * breakfast2_g) / 100;
+                proteinsUsed = proteinsUsed + (breakfast1.getMacros().getProteins() * breakfast1_g + breakfast2.getMacros().getProteins() * breakfast2_g) / 100;
+                carbsUsed = carbsUsed + (breakfast1.getMacros().getCarbohydrate().getCarbs() * breakfast1_g + breakfast2.getMacros().getCarbohydrate().getCarbs() * breakfast2_g) / 100;
+                fatsUsed = fatsUsed + (breakfast1.getMacros().getFat() * breakfast1_g + breakfast2.getMacros().getFat() * breakfast2_g) / 100;
+                fiberUsed = fiberUsed + (breakfast1.getMacros().getCarbohydrate().getFiber() * breakfast1_g + breakfast2.getMacros().getCarbohydrate().getFiber() * breakfast2_g) / 100;
+                sugarUsed = fiberUsed + (breakfast1.getMacros().getCarbohydrate().getSugar() * breakfast1_g + breakfast2.getMacros().getCarbohydrate().getSugar() * breakfast2_g) / 100;
                 mEditor.putBoolean(getString(R.string.key_breakfast_consumed), true);
                 mEditor.commit();
                 break;
             case ("lunch"):
-                proteinsUsed = proteinsUsed + (lunch1.getProteins() * lunch1_g + lunch2.getProteins() * lunch2_g) / 100;
-                carbsUsed = carbsUsed + (lunch1.getCarbs() * lunch1_g + lunch2.getCarbs() * lunch2_g) / 100;
-                fatsUsed = fatsUsed + (lunch1.getFat() * lunch1_g + lunch2.getFat() * lunch2_g) / 100;
-                fiberUsed = fiberUsed + (lunch1.getFiber() * lunch1_g + lunch2.getFiber() * lunch2_g) / 100;
-                sugarUsed = sugarUsed + (lunch1.getSugar() * lunch1_g + lunch2.getSugar() * lunch2_g) / 100;
+                proteinsUsed = proteinsUsed + (lunch1.getMacros().getProteins() * lunch1_g + lunch2.getMacros().getProteins() * lunch2_g) / 100;
+                carbsUsed = carbsUsed + (lunch1.getMacros().getCarbohydrate().getCarbs() * lunch1_g + lunch2.getMacros().getCarbohydrate().getCarbs() * lunch2_g) / 100;
+                fatsUsed = fatsUsed + (lunch1.getMacros().getFat() * lunch1_g + lunch2.getMacros().getFat() * lunch2_g) / 100;
+                fiberUsed = fiberUsed + (lunch1.getMacros().getCarbohydrate().getFiber() * lunch1_g + lunch2.getMacros().getCarbohydrate().getFiber() * lunch2_g) / 100;
+                sugarUsed = sugarUsed + (lunch1.getMacros().getCarbohydrate().getSugar() * lunch1_g + lunch2.getMacros().getCarbohydrate().getSugar() * lunch2_g) / 100;
                 mEditor.putBoolean(getString(R.string.key_lunch_consumed), true);
                 mEditor.commit();
                 break;
             case ("dinner"):
-                proteinsUsed = proteinsUsed + (dinner1.getProteins() * dinner1_g + dinner2.getProteins() * dinner2_g) / 100;
-                carbsUsed = carbsUsed + (dinner1.getCarbs() * dinner1_g + dinner2.getCarbs() * dinner2_g) / 100;
-                fatsUsed = fatsUsed + (dinner1.getFat() * dinner1_g + dinner2.getFat() * dinner2_g) / 100;
-                fiberUsed = fiberUsed + (dinner1.getFiber() * dinner1_g + dinner2.getFiber() * dinner2_g) / 100;
-                sugarUsed = sugarUsed + (dinner1.getSugar() * dinner1_g + dinner2.getSugar() * dinner2_g) / 100;
+                proteinsUsed = proteinsUsed + (dinner1.getMacros().getProteins() * dinner1_g + dinner2.getMacros().getProteins() * dinner2_g) / 100;
+                carbsUsed = carbsUsed + (dinner1.getMacros().getCarbohydrate().getCarbs() * dinner1_g + dinner2.getMacros().getCarbohydrate().getCarbs() * dinner2_g) / 100;
+                fatsUsed = fatsUsed + (dinner1.getMacros().getFat() * dinner1_g + dinner2.getMacros().getFat() * dinner2_g) / 100;
+                fiberUsed = fiberUsed + (dinner1.getMacros().getCarbohydrate().getFiber() * dinner1_g + dinner2.getMacros().getCarbohydrate().getFiber() * dinner2_g) / 100;
+                sugarUsed = sugarUsed + (dinner1.getMacros().getCarbohydrate().getSugar() * dinner1_g + dinner2.getMacros().getCarbohydrate().getSugar() * dinner2_g) / 100;
                 mEditor.putBoolean(getString(R.string.key_dinner_consumed), true);
                 mEditor.commit();
                 break;
             case ("snack1"):
-                proteinsUsed = proteinsUsed + (snack1.getProteins() * snack1_g) / 100;
-                carbsUsed = carbsUsed + (snack1.getCarbs() * snack1_g ) / 100;
-                fatsUsed = fatsUsed + (snack1.getFat() * snack1_g) / 100;
-                fiberUsed = fiberUsed + (snack1.getFiber() * snack1_g) / 100;
-                sugarUsed = sugarUsed + (snack1.getSugar() * snack1_g) / 100;
+                proteinsUsed = proteinsUsed + (snack1.getMacros().getProteins() * snack1_g) / 100;
+                carbsUsed = carbsUsed + (snack1.getMacros().getCarbohydrate().getCarbs() * snack1_g) / 100;
+                fatsUsed = fatsUsed + (snack1.getMacros().getFat() * snack1_g) / 100;
+                fiberUsed = fiberUsed + (snack1.getMacros().getCarbohydrate().getFiber() * snack1_g) / 100;
+                sugarUsed = sugarUsed + (snack1.getMacros().getCarbohydrate().getSugar() * snack1_g) / 100;
                 mEditor.putBoolean(getString(R.string.key_snack1_consumed), true);
                 mEditor.commit();
                 break;
-            case("snack2"):
-                proteinsUsed = proteinsUsed + (snack2.getProteins() * snack2_g) / 100;
-                carbsUsed = carbsUsed + (snack2.getCarbs() * snack2_g ) / 100;
-                fatsUsed = fatsUsed + (snack2.getFat() * snack2_g) / 100;
-                fiberUsed = fiberUsed + (snack2.getFiber() * snack2_g) / 100;
-                sugarUsed = sugarUsed + (snack2.getSugar() * snack2_g) / 100;
+            case ("snack2"):
+                proteinsUsed = proteinsUsed + (snack2.getMacros().getProteins() * snack2_g) / 100;
+                carbsUsed = carbsUsed + (snack2.getMacros().getCarbohydrate().getCarbs() * snack2_g) / 100;
+                fatsUsed = fatsUsed + (snack2.getMacros().getFat() * snack2_g) / 100;
+                fiberUsed = fiberUsed + (snack2.getMacros().getCarbohydrate().getFiber() * snack2_g) / 100;
+                sugarUsed = sugarUsed + (snack2.getMacros().getCarbohydrate().getSugar() * snack2_g) / 100;
                 mEditor.putBoolean(getString(R.string.key_snack2_consumed), true);
                 mEditor.commit();
                 break;
@@ -363,8 +365,8 @@ public class SeeMenuActivity extends AppCompatActivity {
         populateViews();
     }
 
-    public void putFood(Food food, String type){
-        switch (type){
+    public void putFood(Food food, String type) {
+        switch (type) {
             case ("snack"):
                 snack.add(food);
                 break;
@@ -418,14 +420,14 @@ public class SeeMenuActivity extends AppCompatActivity {
         }
     }
 
-    public void  replaceButton(View v){
-        final Intent startIntent = new Intent(getApplicationContext(), ReplaceFood.class);
+    public void replaceButton(View v) {
+        final Intent startIntent = new Intent(getApplicationContext(), ReplaceFoodActivity.class);
         final String whatEat = v.getTag().toString();
         final Bundle extras = new Bundle();
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                switch (which){
+                switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         extras.putString("WHICH_FOOD", whatEat + "_2");
                         startIntent.putExtras(extras);
@@ -445,26 +447,26 @@ public class SeeMenuActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        switch (whatEat){
-            case("breakfast"):
+        switch (whatEat) {
+            case ("breakfast"):
                 builder.setMessage("Chose which food to replace: ").setPositiveButton(breakfast2.getName(), dialogClickListener)
                         .setNegativeButton(breakfast1.getName(), dialogClickListener).show();
                 break;
-            case("lunch"):
+            case ("lunch"):
                 builder.setMessage("Chose which food to replace: ").setPositiveButton(lunch2.getName(), dialogClickListener)
                         .setNegativeButton(lunch1.getName(), dialogClickListener).show();
                 break;
-            case("dinner"):
+            case ("dinner"):
                 builder.setMessage("Chose which food to replace: ").setPositiveButton(dinner2.getName(), dialogClickListener)
                         .setNegativeButton(dinner1.getName(), dialogClickListener).show();
                 break;
-            case("snack1"):
+            case ("snack1"):
                 extras.putString("WHICH_FOOD", "snack1");
                 startIntent.putExtras(extras);
                 startActivity(startIntent);
                 finish();
                 break;
-            case("snack2"):
+            case ("snack2"):
                 extras.putString("WHICH_FOOD", "snack2");
                 startIntent.putExtras(extras);
                 startActivity(startIntent);
@@ -474,155 +476,153 @@ public class SeeMenuActivity extends AppCompatActivity {
 
     }
 
-    public ArrayList<Food> getRandomList(String[] goesWith){
+    public ArrayList<Food> getRandomList(String[] goesWith) {
         Random random = new Random();
         int randNum;
-        if (goesWith.length == 1){
+        if (goesWith.length == 1) {
             randNum = 0;
-        }else{
-            randNum  = random.nextInt(goesWith.length - 1);
+        } else {
+            randNum = random.nextInt(goesWith.length - 1);
         }
-        if (goesWith[randNum].equals("snack")){
+        if (goesWith[randNum].equals("snack")) {
             return snack;
         }
-        if (goesWith[randNum].equals("egg")){
+        if (goesWith[randNum].equals("egg")) {
             return egg;
         }
-        if (goesWith[randNum].equals("dairy")){
+        if (goesWith[randNum].equals("dairy")) {
             return dairy;
         }
-        if (goesWith[randNum].equals("cereal")){
+        if (goesWith[randNum].equals("cereal")) {
             return cereal;
         }
-        if (goesWith[randNum].equals("fast food")){
+        if (goesWith[randNum].equals("fast food")) {
             return fastFood;
         }
-        if (goesWith[randNum].equals("seafood")){
+        if (goesWith[randNum].equals("seafood")) {
             return seafood;
         }
-        if (goesWith[randNum].equals("fish")){
+        if (goesWith[randNum].equals("fish")) {
             return fish;
         }
-        if (goesWith[randNum].equals("fruit")){
+        if (goesWith[randNum].equals("fruit")) {
             return fruit;
         }
-        if (goesWith[randNum].equals("meat")){
+        if (goesWith[randNum].equals("meat")) {
             return meat;
         }
-        if (goesWith[randNum].equals("nuts")){
+        if (goesWith[randNum].equals("nuts")) {
             return nuts;
         }
-        if (goesWith[randNum].equals("rice")){
+        if (goesWith[randNum].equals("rice")) {
             return rice;
         }
-        if (goesWith[randNum].equals("pasta")){
+        if (goesWith[randNum].equals("pasta")) {
             return pasta;
         }
-        if (goesWith[randNum].equals("salad")){
+        if (goesWith[randNum].equals("salad")) {
             return salad;
         }
-        if (goesWith[randNum].equals("soup")){
+        if (goesWith[randNum].equals("soup")) {
             return soup;
         }
-        if (goesWith[randNum].equals("desert")){
+        if (goesWith[randNum].equals("desert")) {
             return desert;
         }
-        if (goesWith[randNum].equals("vegetable")){
+        if (goesWith[randNum].equals("vegetable")) {
             return vegetable;
-        }else {
+        } else {
             return meat;
         }
     }
 
-    public Food getRandomFood(ArrayList<Food> foods){
+    public Food getRandomFood(ArrayList<Food> foods) {
         Random random = new Random();
         int randNum;
-        if(foods.size() == 1){
+        if (foods.size() == 1) {
             randNum = 0;
-        }else{
-            randNum  = random.nextInt(foods.size() - 1);
+        } else {
+            randNum = random.nextInt(foods.size() - 1);
         }
         return foods.get(randNum);
     }
 
-    public int[] setValues(Food f1, Food f2, int proteins, int carbs, int fats){
-        int weightF1,weightF2;
+    public int[] setValues(Food f1, Food f2, int proteins, int carbs, int fats) {
+        int weightF1, weightF2;
         weightF1 = Math.round((f1.getMinWeight() + f1.getMaxWeigh()) / 2);
         weightF2 = Math.round((f2.getMinWeight() + f2.getMaxWeigh()) / 2);
 
-        for(int i = 0; i < 10; i++){
-            if(f1.getFat() != 0 || f2.getFat() != 0){
-                if(f1.getFat() > f2.getFat()){
-                    while(((f1.getFat() * weightF1) / 100 + (f2.getFat() * weightF2) / 100) < fats && weightF1 < f1.getMaxWeigh() && weightF2 < f2.getMaxWeigh()){
+        for (int i = 0; i < 10; i++) {
+            if (f1.getMacros().getFat() != 0 || f2.getMacros().getFat() != 0) {
+                if (f1.getMacros().getFat() > f2.getMacros().getFat()) {
+                    while (((f1.getMacros().getFat() * weightF1) / 100 + (f2.getMacros().getFat() * weightF2) / 100) < fats && weightF1 < f1.getMaxWeigh() && weightF2 < f2.getMaxWeigh()) {
                         weightF1 += 30;
                         weightF2 += 10;
                     }
-                    while(((f1.getFat() * weightF1) / 100 + (f2.getFat() * weightF2) / 100) > fats && weightF1 > f1.getMinWeight() && weightF2 > f2.getMinWeight()){
-                        weightF1 -= 10;
-                        weightF2 -= 5;
-                    }
-                }else{
-                    while(((f1.getFat() * weightF1) / 100 + (f2.getFat() * weightF2) / 100) < fats && weightF1 < f1.getMaxWeigh() && weightF2 < f2.getMaxWeigh()){
-                        weightF2 += 30;
-                        weightF1 += 10;
-                    }
-                    while(((f1.getFat() * weightF1) / 100 + (f2.getFat() * weightF2) / 100 )> fats && weightF1 > f1.getMinWeight() && weightF2 > f2.getMinWeight()){
-                        weightF2 -= 10;
-                        weightF1 -= 5;
-                    }
-                }
-            }
-
-            if(f1.getProteins() != 0 || f2.getProteins() != 0) {
-                if (f1.getProteins() > f2.getProteins()) {
-                    while (((f1.getProteins() * weightF1) / 100 + (f2.getProteins() * weightF2) / 100) < proteins && weightF1 < f1.getMaxWeigh() && weightF2 < f2.getMaxWeigh()) {
-                        weightF1 += 30;
-                        weightF2 += 10;
-                    }
-                    while (((f1.getProteins() * weightF1) / 100 + (f2.getProteins() * weightF2) / 100) > proteins && weightF1 > f1.getMinWeight() && weightF2 > f2.getMinWeight()) {
+                    while (((f1.getMacros().getFat() * weightF1) / 100 + (f2.getMacros().getFat() * weightF2) / 100) > fats && weightF1 > f1.getMinWeight() && weightF2 > f2.getMinWeight()) {
                         weightF1 -= 10;
                         weightF2 -= 5;
                     }
                 } else {
-                    while (((f1.getProteins() * weightF1) / 100 + (f2.getProteins() * weightF2) / 100) < proteins && weightF1 < f1.getMaxWeigh() && weightF2 < f2.getMaxWeigh()) {
+                    while (((f1.getMacros().getFat() * weightF1) / 100 + (f2.getMacros().getFat() * weightF2) / 100) < fats && weightF1 < f1.getMaxWeigh() && weightF2 < f2.getMaxWeigh()) {
                         weightF2 += 30;
                         weightF1 += 10;
                     }
-                    while (((f1.getProteins() * weightF1) / 100 + (f2.getProteins() * weightF2) / 100) > proteins && weightF1 > f1.getMinWeight() && weightF2 > f2.getMinWeight()) {
+                    while (((f1.getMacros().getFat() * weightF1) / 100 + (f2.getMacros().getFat() * weightF2) / 100) > fats && weightF1 > f1.getMinWeight() && weightF2 > f2.getMinWeight()) {
                         weightF2 -= 10;
                         weightF1 -= 5;
                     }
                 }
             }
 
-            if(f1.getCarbs() != 0 || f2.getCarbs() != 0) {
-                if(f1.getCarbs() > f2.getCarbs()){
-                    while(((f1.getCarbs() * weightF1) / 100 + (f2.getCarbs() * weightF2) / 100 ) < carbs && weightF1 < f1.getMaxWeigh() && weightF2 < f2.getMaxWeigh()){
+            if (f1.getMacros().getProteins() != 0 || f2.getMacros().getProteins() != 0) {
+                if (f1.getMacros().getProteins() > f2.getMacros().getProteins()) {
+                    while (((f1.getMacros().getProteins() * weightF1) / 100 + (f2.getMacros().getProteins() * weightF2) / 100) < proteins && weightF1 < f1.getMaxWeigh() && weightF2 < f2.getMaxWeigh()) {
                         weightF1 += 30;
                         weightF2 += 10;
                     }
-                    while(((f1.getCarbs() * weightF1) / 100 + (f2.getCarbs() * weightF2) / 100 ) > carbs && weightF1 > f1.getMinWeight() && weightF2 > f2.getMinWeight()){
+                    while (((f1.getMacros().getProteins() * weightF1) / 100 + (f2.getMacros().getProteins() * weightF2) / 100) > proteins && weightF1 > f1.getMinWeight() && weightF2 > f2.getMinWeight()) {
                         weightF1 -= 10;
                         weightF2 -= 5;
                     }
-                }else{
-                    while(((f1.getCarbs() * weightF1) / 100 + (f2.getCarbs() * weightF2) / 100 ) < carbs && weightF1 < f1.getMaxWeigh() && weightF2 < f2.getMaxWeigh()){
+                } else {
+                    while (((f1.getMacros().getProteins() * weightF1) / 100 + (f2.getMacros().getProteins() * weightF2) / 100) < proteins && weightF1 < f1.getMaxWeigh() && weightF2 < f2.getMaxWeigh()) {
                         weightF2 += 30;
                         weightF1 += 10;
                     }
-                    while(((f1.getCarbs() * weightF1) / 100 + (f2.getCarbs() * weightF2) / 100 ) > carbs && weightF1 > f1.getMinWeight() && weightF2 > f2.getMinWeight()){
+                    while (((f1.getMacros().getProteins() * weightF1) / 100 + (f2.getMacros().getProteins() * weightF2) / 100) > proteins && weightF1 > f1.getMinWeight() && weightF2 > f2.getMinWeight()) {
+                        weightF2 -= 10;
+                        weightF1 -= 5;
+                    }
+                }
+            }
+
+            if (f1.getMacros().getCarbohydrate().getCarbs() != 0 || f2.getMacros().getCarbohydrate().getCarbs() != 0) {
+                if (f1.getMacros().getCarbohydrate().getCarbs() > f2.getMacros().getCarbohydrate().getCarbs()) {
+                    while (((f1.getMacros().getCarbohydrate().getCarbs() * weightF1) / 100 + (f2.getMacros().getCarbohydrate().getCarbs() * weightF2) / 100) < carbs && weightF1 < f1.getMaxWeigh() && weightF2 < f2.getMaxWeigh()) {
+                        weightF1 += 30;
+                        weightF2 += 10;
+                    }
+                    while (((f1.getMacros().getCarbohydrate().getCarbs() * weightF1) / 100 + (f2.getMacros().getCarbohydrate().getCarbs() * weightF2) / 100) > carbs && weightF1 > f1.getMinWeight() && weightF2 > f2.getMinWeight()) {
+                        weightF1 -= 10;
+                        weightF2 -= 5;
+                    }
+                } else {
+                    while (((f1.getMacros().getCarbohydrate().getCarbs() * weightF1) / 100 + (f2.getMacros().getCarbohydrate().getCarbs() * weightF2) / 100) < carbs && weightF1 < f1.getMaxWeigh() && weightF2 < f2.getMaxWeigh()) {
+                        weightF2 += 30;
+                        weightF1 += 10;
+                    }
+                    while (((f1.getMacros().getCarbohydrate().getCarbs() * weightF1) / 100 + (f2.getMacros().getCarbohydrate().getCarbs() * weightF2) / 100) > carbs && weightF1 > f1.getMinWeight() && weightF2 > f2.getMinWeight()) {
                         weightF2 -= 10;
                         weightF1 -= 5;
                     }
                 }
             }
         }
-
-        int[] result = {weightF1, weightF2};
-        return result;
+        return new int[]{weightF1, weightF2};
     }
 
-    public  void saveMenu(){
+    public void saveMenu() {
 
         mEditor.putFloat(getString(R.string.proteins_used_weight), proteinsUsed);
         mEditor.commit();
@@ -673,7 +673,7 @@ public class SeeMenuActivity extends AppCompatActivity {
 
     }
 
-    public void getGeneratedMenu(){
+    public void getGeneratedMenu() {
 
         proteinsUsed = mSharedPreferences.getFloat(getString(R.string.proteins_used_weight), 0);
         carbsUsed = mSharedPreferences.getFloat(getString(R.string.carbs_used_weight), 0);
@@ -701,48 +701,48 @@ public class SeeMenuActivity extends AppCompatActivity {
         dinner2_g = mSharedPreferences.getFloat(getString(R.string.dinner2_weight), 0);
     }
 
-    public float getMainMenuFats(){
+    public float getMainMenuFats() {
         float menuFats = 0;
-        menuFats += (breakfast1.getFat() * breakfast1_g + breakfast2.getFat() * breakfast2_g) / 100;
-        menuFats += (lunch1.getFat() * lunch1_g + lunch2.getFat() * lunch2_g) / 100;
-        menuFats += (dinner1.getFat() * dinner1_g + dinner2.getFat() * dinner2_g) / 100;
+        menuFats += (breakfast1.getMacros().getFat() * breakfast1_g + breakfast2.getMacros().getFat() * breakfast2_g) / 100;
+        menuFats += (lunch1.getMacros().getFat() * lunch1_g + lunch2.getMacros().getFat() * lunch2_g) / 100;
+        menuFats += (dinner1.getMacros().getFat() * dinner1_g + dinner2.getMacros().getFat() * dinner2_g) / 100;
         return menuFats;
     }
 
-    public float getMainMenuProteins(){
+    public float getMainMenuProteins() {
         float menuProteins = 0;
-        menuProteins += (breakfast1.getProteins() * breakfast1_g + breakfast2.getProteins() * breakfast2_g) / 100;
-        menuProteins += (lunch1.getProteins() * lunch1_g + lunch2.getProteins() * lunch2_g) / 100;
-        menuProteins += (dinner1.getProteins() * dinner1_g + dinner2.getProteins() * dinner2_g) / 100;
+        menuProteins += (breakfast1.getMacros().getProteins() * breakfast1_g + breakfast2.getMacros().getProteins() * breakfast2_g) / 100;
+        menuProteins += (lunch1.getMacros().getProteins() * lunch1_g + lunch2.getMacros().getProteins() * lunch2_g) / 100;
+        menuProteins += (dinner1.getMacros().getProteins() * dinner1_g + dinner2.getMacros().getProteins() * dinner2_g) / 100;
         return menuProteins;
     }
 
-    public float getMainMenuCarbs(){
+    public float getMainMenuCarbs() {
         float menuCarbs = 0;
-        menuCarbs += (breakfast1.getCarbs() * breakfast1_g + breakfast2.getCarbs() * breakfast2_g) / 100;
-        menuCarbs += (lunch1.getCarbs() * lunch1_g + lunch2.getCarbs() * lunch2_g) / 100;
-        menuCarbs += (dinner1.getCarbs() * dinner1_g + dinner2.getCarbs() * dinner2_g) / 100;
+        menuCarbs += (breakfast1.getMacros().getCarbohydrate().getCarbs() * breakfast1_g + breakfast2.getMacros().getCarbohydrate().getCarbs() * breakfast2_g) / 100;
+        menuCarbs += (lunch1.getMacros().getCarbohydrate().getCarbs() * lunch1_g + lunch2.getMacros().getCarbohydrate().getCarbs() * lunch2_g) / 100;
+        menuCarbs += (dinner1.getMacros().getCarbohydrate().getCarbs() * dinner1_g + dinner2.getMacros().getCarbohydrate().getCarbs() * dinner2_g) / 100;
         return menuCarbs;
     }
 
-    public Food getFoodByName(String name){
-        for (Food food : mFoods){
-            if (food.getName().equals(name)){
+    public Food getFoodByName(String name) {
+        for (Food food : mFoods) {
+            if (food.getName().equals(name)) {
                 return food;
             }
         }
         return null;
     }
 
-    public boolean foodInMenu(Food food){
-        if(foodsInMenu.size() > 0){
-            for(int i = 0; i < foodsInMenu.size(); i++){
-                if(food.getName() == foodsInMenu.get(i).getName()){
+    public boolean foodInMenu(Food food) {
+        if (foodsInMenu.size() > 0) {
+            for (int i = 0; i < foodsInMenu.size(); i++) {
+                if (food.getName().equals(foodsInMenu.get(i).getName())) {
                     return true;
                 }
             }
             return false;
-        }else{
+        } else {
             return false;
         }
     }

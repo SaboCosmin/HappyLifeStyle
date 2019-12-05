@@ -11,16 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ReplaceFood"></activity>
-        <activity android:name=".InspectFoodActivity" />
-        <activity android:name=".AddFoodActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainUserActivity" />
-        <activity android:name=".CreateNewMenuActivity" />
-        <activity android:name=".CalculatorActivity" />
-        <activity android:name=".SeeMenuActivity" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".Activities.ReplaceFoodActivity"></activity>
+        <activity android:name=".Activities.InspectFoodActivity" />
+        <activity android:name=".Activities.AddFoodActivity" />
+        <activity android:name=".Activities.RegisterActivity" />
+        <activity android:name=".Activities.MainUserActivity" />
+        <activity android:name=".Activities.CreateNewMenuActivity" />
+        <activity android:name=".Activities.CalculatorActivity" />
+        <activity android:name=".Activities.SeeMenuActivity" />
+        <activity android:name=".Activities.ProfileActivity" />
+        <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

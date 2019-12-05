@@ -1,4 +1,4 @@
-package com.hls.happylifestyle;
+package com.hls.happylifestyle.Classes;
 
 public class MenuController {
     private MenuElement breakfast;
