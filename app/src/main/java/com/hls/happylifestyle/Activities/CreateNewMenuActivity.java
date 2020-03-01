@@ -11,6 +11,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.hls.happylifestyle.Classes.UserProfile;
 import com.hls.happylifestyle.R;
 
@@ -63,15 +64,10 @@ public class CreateNewMenuActivity extends AppCompatActivity {
     }
 
     private void updateSharedPreferences(){
-        String name = mSharedPreferences.getString(getString(R.string.key_name), "DefaultName");
-        String gender = mSharedPreferences.getString(getString(R.string.key_gender), "Male");
-        int age = Integer.parseInt(mSharedPreferences.getString(getString(R.string.key_age), "30"));
-        int activity_level = Integer.parseInt(mSharedPreferences.getString(getString(R.string.key_activity), "0"));
-        int height = Integer.parseInt(mSharedPreferences.getString(getString(R.string.key_height), "1.80"));
-        int weight = Integer.parseInt(mSharedPreferences.getString(getString(R.string.key_weight), "80"));
-        String purpose = mSharedPreferences.getString(getString(R.string.key_purpose), "Better Nutrition");
+        Gson gson = new Gson();
+        String json = mSharedPreferences.getString(getString(R.string.user_profile), "");
 
-        userProfile = new UserProfile(name, gender, age, activity_level, height, weight, purpose);
+        userProfile = gson.fromJson(json, UserProfile.class);
     }
 
     private void calculateMacros(){

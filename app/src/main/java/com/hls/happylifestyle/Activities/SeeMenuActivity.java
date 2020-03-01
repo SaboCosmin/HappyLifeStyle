@@ -1,5 +1,6 @@
 package com.hls.happylifestyle.Activities;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -42,15 +43,18 @@ public class SeeMenuActivity extends AppCompatActivity {
 
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
+    private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_menu);
 
-        if (getIntent().hasExtra("pageNameActivity")) {
+        Intent intent = activity.getIntent();
+
+        if (intent.hasExtra("pageNameActivity")) {
             TextView pageName = findViewById(R.id.pageName);
-            String text = getIntent().getExtras().getString("pageNameActivity");
+            String text = intent.getExtras().getString("pageNameActivity");
             pageName.setText(text);
         }
 
