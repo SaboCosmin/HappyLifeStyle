@@ -61,16 +61,13 @@ public class SeeMenuActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-
+                Food value = new Food();
                 for (DataSnapshot child : children) {
-                    Food value = child.getValue(Food.class);
+                    value.getSnapshot(child);
                     mFoods.add(value);
                 }
                 for (Food food : mFoods) {
-                    String[] type = food.getType().split(",");
-                    for (String fType : type) {
-                        putFood(food, fType);
-                    }
+                    putFood(food, food.getType());
                 }
                 if (mSharedPreferences.getBoolean(getString(R.string.new_menu), true)) {
                     generateMenu();
@@ -156,27 +153,27 @@ public class SeeMenuActivity extends AppCompatActivity {
 
     public void populateViews() {
 
-        if (mSharedPreferences.getBoolean(getString(R.string.key_breakfast_consumed), false) == false) {
+        if (!mSharedPreferences.getBoolean(getString(R.string.key_breakfast_consumed), false)) {
             breakfastEatBtn.setEnabled(true);
         } else {
             breakfastEatBtn.setEnabled(false);
         }
-        if (mSharedPreferences.getBoolean(getString(R.string.key_snack1_consumed), false) == false) {
+        if (!mSharedPreferences.getBoolean(getString(R.string.key_snack1_consumed), false)) {
             snack1EatBtn.setEnabled(true);
         } else {
             snack1EatBtn.setEnabled(false);
         }
-        if (mSharedPreferences.getBoolean(getString(R.string.key_snack2_consumed), false) == false) {
+        if (!mSharedPreferences.getBoolean(getString(R.string.key_snack2_consumed), false)) {
             snack2EatBtn.setEnabled(true);
         } else {
             snack2EatBtn.setEnabled(false);
         }
-        if (mSharedPreferences.getBoolean(getString(R.string.key_lunch_consumed), false) == false) {
+        if (!mSharedPreferences.getBoolean(getString(R.string.key_lunch_consumed), false)) {
             lunchEatBtn.setEnabled(true);
         } else {
             lunchEatBtn.setEnabled(false);
         }
-        if (mSharedPreferences.getBoolean(getString(R.string.key_dinner_consumed), false) == false) {
+        if (!mSharedPreferences.getBoolean(getString(R.string.key_dinner_consumed), false)) {
             dinnerEatBtn.setEnabled(true);
         } else {
             dinnerEatBtn.setEnabled(false);
@@ -293,7 +290,7 @@ public class SeeMenuActivity extends AppCompatActivity {
     }
 
     private void generateLaunch(int proteins, int carbs, int fats) {
-        String[] is = {"fastFood", "fish", "meat", "pasta", "rice", "salad"};
+        String[] is = {"fish", "meat", "pasta", "rice", "salad"};
         lunch1 = getRandomFood(getRandomList(is));
         while (foodInMenu(lunch1)) {
             lunch1 = getRandomFood(getRandomList(is));
@@ -542,20 +539,20 @@ public class SeeMenuActivity extends AppCompatActivity {
         if (foods.size() == 1) {
             randNum = 0;
         } else {
-            randNum = random.nextInt(foods.size() - 1);
+            randNum = random.nextInt(foods.size());
         }
         return foods.get(randNum);
     }
 
     public int[] setValues(Food f1, Food f2, int proteins, int carbs, int fats) {
         int weightF1, weightF2;
-        weightF1 = Math.round((f1.getMinWeight() + f1.getMaxWeigh()) / 2);
-        weightF2 = Math.round((f2.getMinWeight() + f2.getMaxWeigh()) / 2);
+        weightF1 = Math.round((f1.getMinWeight() + f1.getMaxWeight()) / 2);
+        weightF2 = Math.round((f2.getMinWeight() + f2.getMaxWeight()) / 2);
 
         for (int i = 0; i < 10; i++) {
             if (f1.getMacros().getFat() != 0 || f2.getMacros().getFat() != 0) {
                 if (f1.getMacros().getFat() > f2.getMacros().getFat()) {
-                    while (((f1.getMacros().getFat() * weightF1) / 100 + (f2.getMacros().getFat() * weightF2) / 100) < fats && weightF1 < f1.getMaxWeigh() && weightF2 < f2.getMaxWeigh()) {
+                    while (((f1.getMacros().getFat() * weightF1) / 100 + (f2.getMacros().getFat() * weightF2) / 100) < fats && weightF1 < f1.getMaxWeight() && weightF2 < f2.getMaxWeight()) {
                         weightF1 += 30;
                         weightF2 += 10;
                     }
@@ -564,7 +561,7 @@ public class SeeMenuActivity extends AppCompatActivity {
                         weightF2 -= 5;
                     }
                 } else {
-                    while (((f1.getMacros().getFat() * weightF1) / 100 + (f2.getMacros().getFat() * weightF2) / 100) < fats && weightF1 < f1.getMaxWeigh() && weightF2 < f2.getMaxWeigh()) {
+                    while (((f1.getMacros().getFat() * weightF1) / 100 + (f2.getMacros().getFat() * weightF2) / 100) < fats && weightF1 < f1.getMaxWeight() && weightF2 < f2.getMaxWeight()) {
                         weightF2 += 30;
                         weightF1 += 10;
                     }
@@ -577,7 +574,7 @@ public class SeeMenuActivity extends AppCompatActivity {
 
             if (f1.getMacros().getProteins() != 0 || f2.getMacros().getProteins() != 0) {
                 if (f1.getMacros().getProteins() > f2.getMacros().getProteins()) {
-                    while (((f1.getMacros().getProteins() * weightF1) / 100 + (f2.getMacros().getProteins() * weightF2) / 100) < proteins && weightF1 < f1.getMaxWeigh() && weightF2 < f2.getMaxWeigh()) {
+                    while (((f1.getMacros().getProteins() * weightF1) / 100 + (f2.getMacros().getProteins() * weightF2) / 100) < proteins && weightF1 < f1.getMaxWeight() && weightF2 < f2.getMaxWeight()) {
                         weightF1 += 30;
                         weightF2 += 10;
                     }
@@ -586,7 +583,7 @@ public class SeeMenuActivity extends AppCompatActivity {
                         weightF2 -= 5;
                     }
                 } else {
-                    while (((f1.getMacros().getProteins() * weightF1) / 100 + (f2.getMacros().getProteins() * weightF2) / 100) < proteins && weightF1 < f1.getMaxWeigh() && weightF2 < f2.getMaxWeigh()) {
+                    while (((f1.getMacros().getProteins() * weightF1) / 100 + (f2.getMacros().getProteins() * weightF2) / 100) < proteins && weightF1 < f1.getMaxWeight() && weightF2 < f2.getMaxWeight()) {
                         weightF2 += 30;
                         weightF1 += 10;
                     }
@@ -599,7 +596,7 @@ public class SeeMenuActivity extends AppCompatActivity {
 
             if (f1.getMacros().getCarbohydrate().getCarbs() != 0 || f2.getMacros().getCarbohydrate().getCarbs() != 0) {
                 if (f1.getMacros().getCarbohydrate().getCarbs() > f2.getMacros().getCarbohydrate().getCarbs()) {
-                    while (((f1.getMacros().getCarbohydrate().getCarbs() * weightF1) / 100 + (f2.getMacros().getCarbohydrate().getCarbs() * weightF2) / 100) < carbs && weightF1 < f1.getMaxWeigh() && weightF2 < f2.getMaxWeigh()) {
+                    while (((f1.getMacros().getCarbohydrate().getCarbs() * weightF1) / 100 + (f2.getMacros().getCarbohydrate().getCarbs() * weightF2) / 100) < carbs && weightF1 < f1.getMaxWeight() && weightF2 < f2.getMaxWeight()) {
                         weightF1 += 30;
                         weightF2 += 10;
                     }
@@ -608,7 +605,7 @@ public class SeeMenuActivity extends AppCompatActivity {
                         weightF2 -= 5;
                     }
                 } else {
-                    while (((f1.getMacros().getCarbohydrate().getCarbs() * weightF1) / 100 + (f2.getMacros().getCarbohydrate().getCarbs() * weightF2) / 100) < carbs && weightF1 < f1.getMaxWeigh() && weightF2 < f2.getMaxWeigh()) {
+                    while (((f1.getMacros().getCarbohydrate().getCarbs() * weightF1) / 100 + (f2.getMacros().getCarbohydrate().getCarbs() * weightF2) / 100) < carbs && weightF1 < f1.getMaxWeight() && weightF2 < f2.getMaxWeight()) {
                         weightF2 += 30;
                         weightF1 += 10;
                     }

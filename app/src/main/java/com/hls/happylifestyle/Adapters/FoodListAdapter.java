@@ -45,7 +45,7 @@ public class FoodListAdapter extends ArrayAdapter<Food> {
         final ViewHolder holder = (ViewHolder) convertView.getTag();
 
         holder.name.setText(getItem(position).getName());
-        holder.calories.setText(Integer.toString(getItem(position).getCalories()));
+        holder.calories.setText(String.valueOf(getItem(position).getCalories()));
 
         return convertView;
     }

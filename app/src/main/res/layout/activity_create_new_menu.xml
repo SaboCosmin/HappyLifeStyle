@@ -48,7 +48,7 @@
             android:textColor="#000000"
             android:textSize="20dp"
             android:layout_marginTop="10dp"
-            android:text="According to your profile data the values are: " />
+            android:text="According to your userProfile data the values are: " />
 
         <LinearLayout
             android:layout_width="match_parent"

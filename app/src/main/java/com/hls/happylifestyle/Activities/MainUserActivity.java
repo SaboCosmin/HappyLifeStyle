@@ -29,11 +29,11 @@ public class MainUserActivity extends AppCompatActivity {
         mainMenu = findViewById(R.id.mainMenuTextView);
         mainMenu.setText("");
 
-        if(mSharedPreferences.getBoolean(getString(R.string.key_first_run), false) == false){
+        if(!mSharedPreferences.getBoolean(getString(R.string.key_first_run), false)){
             seeMenuBtn.setEnabled(false);
             createNewMenuBtn.setEnabled(false);
             mainMenu.setText("Please fill your profile information!");
-        }else if(mSharedPreferences.getBoolean(getString(R.string.key_menu_generated), false) == false){
+        }else if(!mSharedPreferences.getBoolean(getString(R.string.key_menu_generated), false)){
             seeMenuBtn.setEnabled(false);
             mainMenu.setText("Please create a new menu!");
         }

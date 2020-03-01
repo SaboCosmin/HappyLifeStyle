@@ -1,7 +1,10 @@
 package com.hls.happylifestyle.Classes;
 
+import com.google.firebase.database.DataSnapshot;
+
 public class Macronutrient {
-    private int proteins, fat;
+    private float proteins;
+    private float fat;
     Carbohydrate carbohydrate;
 
     public  Macronutrient(){
@@ -10,25 +13,25 @@ public class Macronutrient {
         carbohydrate = new Carbohydrate();
     }
 
-    public Macronutrient(int proteins, int fat, Carbohydrate carbohydrate) {
+    public Macronutrient(float proteins, float fat, Carbohydrate carbohydrate) {
         this.proteins = proteins;
         this.fat = fat;
         this.carbohydrate = carbohydrate;
     }
 
-    public int getProteins() {
+    public float getProteins() {
         return proteins;
     }
 
-    public void setProteins(int proteins) {
+    public void setProteins(float proteins) {
         this.proteins = proteins;
     }
 
-    public int getFat() {
+    public float getFat() {
         return fat;
     }
 
-    public void setFat(int fat) {
+    public void setFat(float fat) {
         this.fat = fat;
     }
 
@@ -40,4 +43,9 @@ public class Macronutrient {
         this.carbohydrate = carbohydrate;
     }
 
+    public void getSnapshot(DataSnapshot child) {
+        this.proteins = Float.parseFloat(child.child("proteins").getValue(String.class));
+        this.fat = Float.parseFloat(child.child("fat").getValue(String.class));
+        this.carbohydrate.getSnapshot(child.child("carbohydrate"));
+    }
 }

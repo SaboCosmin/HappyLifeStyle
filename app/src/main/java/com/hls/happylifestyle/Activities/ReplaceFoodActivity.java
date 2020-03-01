@@ -19,7 +19,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.hls.happylifestyle.Activities.SeeMenuActivity;
 import com.hls.happylifestyle.Adapters.FoodListAdapter;
 import com.hls.happylifestyle.Classes.Food;
 import com.hls.happylifestyle.R;
@@ -34,7 +33,6 @@ public class ReplaceFoodActivity extends AppCompatActivity {
     SharedPreferences.Editor mEditor;
     Food mFood;
     float foodQuantity = 1;
-    private DatabaseReference mDatabaseReference;
     private ListView mFoodListView;
     final ArrayList<Food> mFoods = new ArrayList<>();
     FoodListAdapter mFoodListAdapter;
@@ -63,8 +61,9 @@ public class ReplaceFoodActivity extends AppCompatActivity {
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mSharedPreferences.edit();
+        mEditor.apply();
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("foods");
+        DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("foods");
         mFoodListView = findViewById(R.id.foodListView);
         mFoodListAdapter = new FoodListAdapter(this, R.layout.food_list_item, mFoods);
 
@@ -73,9 +72,9 @@ public class ReplaceFoodActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-
+                Food value = new Food();
                 for(DataSnapshot child : children){
-                    Food value = child.getValue(Food.class);
+                    value.getSnapshot(child);
                     mFoods.add(value);
                 }
                 mFoodListView.setAdapter(mFoodListAdapter);
@@ -93,8 +92,6 @@ public class ReplaceFoodActivity extends AppCompatActivity {
                 populate();
             }
         });
-
-
     }
 
     public void addFood(View v){
@@ -153,7 +150,6 @@ public class ReplaceFoodActivity extends AppCompatActivity {
             }
             Toast.makeText(this, "Your selected food was added.", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     public void applyQuantity(View v){
@@ -167,13 +163,13 @@ public class ReplaceFoodActivity extends AppCompatActivity {
 
     public void populate(){
         if(mFood != null) {
-            pageName.setText(mFood.getName() + "");
-            foodCalories.setText(foodQuantity * mFood.getCalories() + "");
-            foodProteins.setText(foodQuantity * mFood.getMacros().getProteins() + "");
-            foodCarbs.setText(foodQuantity * mFood.getMacros().getCarbohydrate().getCarbs() + "");
-            foodSugar.setText(foodQuantity * mFood.getMacros().getCarbohydrate().getSugar() + "");
-            foodFiber.setText(foodQuantity * mFood.getMacros().getCarbohydrate().getFiber() + "");
-            foodFat.setText(foodQuantity * mFood.getMacros().getFat() + "");
+            pageName.setText(String.valueOf(mFood.getName()));
+            foodCalories.setText(String.valueOf(foodQuantity * mFood.getCalories()));
+            foodProteins.setText(String.valueOf(foodQuantity * mFood.getMacros().getProteins()));
+            foodCarbs.setText(String.valueOf(foodQuantity * mFood.getMacros().getCarbohydrate().getCarbs()));
+            foodSugar.setText(String.valueOf(foodQuantity * mFood.getMacros().getCarbohydrate().getSugar()));
+            foodFiber.setText(String.valueOf(foodQuantity * mFood.getMacros().getCarbohydrate().getFiber()));
+            foodFat.setText(String.valueOf(foodQuantity * mFood.getMacros().getFat()));
         }
     }
 }

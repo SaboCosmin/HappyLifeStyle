@@ -26,14 +26,7 @@
     <string name="key_lunch_consumed">com.hls.happylifestyle.lunchConsumed</string>
     <string name="key_dinner_consumed">com.hls.happylifestyle.dinnerConsumed</string>
 
-
-    <string name="key_name">com.hls.happylifestyle.name</string>
-    <string name="key_age">com.hls.happylifestyle.age</string>
-    <string name="key_height">com.hls.happylifestyle.height</string>
-    <string name="key_weight">com.hls.happylifestyle.weight</string>
-    <string name="key_gender">com.hls.happylifestyle.gender</string>
-    <string name="key_purpose">com.hls.happylifestyle.purpose</string>
-    <string name="key_activity">com.hls.happylifestyle.activity</string>
+    <string name="user_profile">com.hls.happylifestyle.userProfile</string>
 
     <string name="user_key_proteins_total">com.hls.happylifestyle.proteinsTotal</string>
     <string name="user_key_carbs_total">com.hls.happylifestyle.carbsTotal</string>

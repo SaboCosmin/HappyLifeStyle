@@ -17,7 +17,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hls.happylifestyle.Classes.Profile;
+import com.google.gson.Gson;
+import com.hls.happylifestyle.Classes.UserProfile;
 import com.hls.happylifestyle.R;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -25,14 +26,14 @@ public class ProfileActivity extends AppCompatActivity {
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
 
+    private UserProfile userProfile;
+
     RadioGroup genderRadioGroup, purposeRadioGroup;
     Spinner activityLevelSpinner;
     AutoCompleteTextView userName, userAge, userHeight, userWeight;
     LinearLayout pickedLayout, genderLayout, purposeLayout, activityLayout;
     TextView pickedGender,  pickedPurpose, pickedActivity;
-    Button editButton;
-
-    private Profile userProfile;
+    Button editButton, saveButton;
 
     @Override
     public void onBackPressed() {
@@ -48,22 +49,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mSharedPreferences.edit();
+        mEditor.apply();
 
-        userName = findViewById(R.id.user_name);
-        userAge = findViewById(R.id.Age);
-        userHeight = findViewById(R.id.Height);
-        userWeight = findViewById(R.id.Weight);
-        pickedGender = findViewById(R.id.picked_gender);
-        pickedActivity = findViewById(R.id.picked_activity);
-        pickedPurpose = findViewById(R.id.picked_purpose);
-        pickedLayout = findViewById(R.id.picked_layout);
-        genderLayout = findViewById(R.id.genderLayout);
-        purposeLayout = findViewById(R.id.purposeLayout);
-        activityLayout = findViewById(R.id.activityLayout);
-        genderRadioGroup = findViewById(R.id.genderRadioGroup);
-        purposeRadioGroup = findViewById(R.id.purposeRadioGroup);
-        activityLevelSpinner = findViewById(R.id.activity_level_spinner);
-        editButton = findViewById(R.id.edit_button);
+        initializeViews();
 
         ArrayAdapter<String> mAdapter = new ArrayAdapter<>(ProfileActivity.this,
                 android.R.layout.simple_list_item_1,
@@ -78,15 +66,12 @@ public class ProfileActivity extends AppCompatActivity {
             pageName.setText(text);
         }
 
-        populateViews();
+        initViews();
     }
 
     public void saveUser(View v){
-        genderLayout.setVisibility(LinearLayout.GONE);
-        purposeLayout.setVisibility(LinearLayout.GONE);
-        activityLayout.setVisibility(LinearLayout.GONE);
-        editButton.setVisibility(Button.VISIBLE);
-        pickedLayout.setVisibility(LinearLayout.VISIBLE);
+
+        saveLayoutView();
 
         String name = userName.getText().toString();
         if(TextUtils.isEmpty(name)){
@@ -104,17 +89,17 @@ public class ProfileActivity extends AppCompatActivity {
         String height_text = userHeight.getText().toString();
         int height;
         if(TextUtils.isEmpty(height_text)){
-            height = 1180;
+            height = 180;
         }else{
             height = Integer.parseInt(userHeight.getText().toString());
         }
 
         String weight_text = userWeight.getText().toString();
-        float weight;
+        int weight;
         if(TextUtils.isEmpty(weight_text)){
-            weight = 80f;
+            weight = 80;
         }else{
-            weight = Float.parseFloat(userWeight.getText().toString());
+            weight = Integer.parseInt(userWeight.getText().toString());
         }
 
         int selectedGenderId = genderRadioGroup.getCheckedRadioButtonId();
@@ -128,71 +113,100 @@ public class ProfileActivity extends AppCompatActivity {
         String activityLevelText = activityLevelSpinner.getSelectedItem().toString();
         int activityLevel = Integer.parseInt(activityLevelText.replaceAll("[\\D]", ""));
 
-        userProfile = new Profile(name, gender, age, activityLevel, height, weight, purpose);
+        userProfile = new UserProfile(name, gender, age, activityLevel, height, weight, purpose);
         saveSharedPreferences(userProfile);
         finish();
         startActivity(getIntent());
     }
 
-    private void saveSharedPreferences(Profile profile){
-        mEditor.putString(getString(R.string.key_name), profile.getName());
-        mEditor.commit();
-        mEditor.putString(getString(R.string.key_gender), profile.getGender());
-        mEditor.commit();
-        mEditor.putString(getString(R.string.key_age), Integer.toString(profile.getAge()));
-        mEditor.commit();
-        mEditor.putString(getString(R.string.key_activity), Integer.toString(profile.getActivityLevel()));
-        mEditor.commit();
-        mEditor.putString(getString(R.string.key_height), Integer.toString(profile.getHeight()));
-        mEditor.commit();
-        mEditor.putString(getString(R.string.key_weight), Float.toString(profile.getWeight()));
-        mEditor.commit();
-        mEditor.putString(getString(R.string.key_purpose), profile.getPurpose());
-        mEditor.commit();
+    private void saveSharedPreferences(UserProfile userProfile){
         mEditor.putBoolean(getString(R.string.key_first_run), true);
         mEditor.commit();
+
+        Gson gson = new Gson();
+        String json = gson.toJson(userProfile);
+        mEditor.putString(getString(R.string.user_profile), json);
+        mEditor.commit();
+
         Toast.makeText(this, "Your new preferences are updating...", Toast.LENGTH_SHORT).show();
     }
 
     private void updateSharedPreferences(){
-        String name = mSharedPreferences.getString(getString(R.string.key_name), "DefaultName");
-        String gender = mSharedPreferences.getString(getString(R.string.key_gender), "Female");
-        int age = Integer.parseInt(mSharedPreferences.getString(getString(R.string.key_age), "30"));
-        int activityLevel = Integer.parseInt(mSharedPreferences.getString(getString(R.string.key_activity), "0"));
-        int height = Integer.parseInt(mSharedPreferences.getString(getString(R.string.key_height), "180"));
-        float weight = Float.parseFloat(mSharedPreferences.getString(getString(R.string.key_weight), "80f"));
-        String purpose = mSharedPreferences.getString(getString(R.string.key_purpose), "DefaultName");
+        Gson gson = new Gson();
+        String json = mSharedPreferences.getString(getString(R.string.user_profile), "");
 
-        userProfile = new Profile(name, gender, age, activityLevel, height, weight, purpose);
+        userProfile = gson.fromJson(json, UserProfile.class);
     }
 
     public void editPressed(View v){
-        genderLayout.setVisibility(LinearLayout.VISIBLE);
-        purposeLayout.setVisibility(LinearLayout.VISIBLE);
-        activityLayout.setVisibility(LinearLayout.VISIBLE);
-        pickedLayout.setVisibility(LinearLayout.GONE);
-        editButton.setVisibility(Button.GONE);
+        editLayoutView();
     }
 
-    public void populateViews(){
+    public void initViews(){
         if(mSharedPreferences.getBoolean(getString(R.string.key_first_run), false)){
+
             updateSharedPreferences();
-            userName.setText(userProfile.getName());
-            userAge.setText(Integer.toString(userProfile.getAge()));
-            userWeight.setText(Float.toString(userProfile.getWeight()));
-            userHeight.setText(Integer.toString(userProfile.getHeight()));
-            pickedLayout.setVisibility(LinearLayout.VISIBLE);
-            genderLayout.setVisibility(LinearLayout.GONE);
-            purposeLayout.setVisibility(LinearLayout.GONE);
-            activityLayout.setVisibility(LinearLayout.GONE);
-            pickedGender.setText(userProfile.getGender());
-            pickedActivity.setText("Act lvl: " + userProfile.getActivityLevel());
-            pickedPurpose.setText(userProfile.getPurpose());
+            saveLayoutView();
+            initUserDataView(userProfile);
 
         }else{
-            pickedLayout.setVisibility(LinearLayout.GONE);
-            editButton.setVisibility(Button.GONE);
+           editLayoutView();
         }
+    }
+
+    private void initializeViews(){
+        userName = findViewById(R.id.user_name);
+        userAge = findViewById(R.id.Age);
+        userHeight = findViewById(R.id.Height);
+        userWeight = findViewById(R.id.Weight);
+        pickedGender = findViewById(R.id.picked_gender);
+        pickedActivity = findViewById(R.id.picked_activity);
+        pickedPurpose = findViewById(R.id.picked_purpose);
+        pickedLayout = findViewById(R.id.picked_layout);
+        genderLayout = findViewById(R.id.genderLayout);
+        purposeLayout = findViewById(R.id.purposeLayout);
+        activityLayout = findViewById(R.id.activityLayout);
+        genderRadioGroup = findViewById(R.id.genderRadioGroup);
+        purposeRadioGroup = findViewById(R.id.purposeRadioGroup);
+        activityLevelSpinner = findViewById(R.id.activity_level_spinner);
+        editButton = findViewById(R.id.edit_button);
+        saveButton = findViewById(R.id.save_button);
+    }
+
+    public void editLayoutView(){
+        userName.setEnabled(true);
+        userAge.setEnabled(true);
+        userWeight.setEnabled(true);
+        userHeight.setEnabled(true);
+        genderLayout.setVisibility(LinearLayout.VISIBLE);
+        activityLayout.setVisibility(LinearLayout.VISIBLE);
+        editButton.setVisibility(Button.GONE);
+        saveButton.setVisibility(Button.VISIBLE);
+        pickedLayout.setVisibility(LinearLayout.GONE);
+        purposeLayout.setVisibility(LinearLayout.VISIBLE);
+    }
+
+    public void saveLayoutView(){
+        userName.setEnabled(false);
+        userAge.setEnabled(false);
+        userWeight.setEnabled(false);
+        userHeight.setEnabled(false);
+        genderLayout.setVisibility(LinearLayout.GONE);
+        activityLayout.setVisibility(LinearLayout.GONE);
+        editButton.setVisibility(Button.VISIBLE);
+        saveButton.setVisibility(Button.GONE);
+        pickedLayout.setVisibility(LinearLayout.VISIBLE);
+        purposeLayout.setVisibility(LinearLayout.GONE);
+    }
+
+    public void initUserDataView(UserProfile userProfile){
+        userName.setText(userProfile.getName());
+        userAge.setText(String.valueOf(userProfile.getAge()));
+        userWeight.setText(String.valueOf(userProfile.getWeight()));
+        userHeight.setText(String.valueOf(userProfile.getHeight()));
+        pickedGender.setText(userProfile.getGender());
+        pickedActivity.setText("Act lvl: " + userProfile.getActivityLevel());
+        pickedPurpose.setText(userProfile.getPurpose());
     }
 
 }

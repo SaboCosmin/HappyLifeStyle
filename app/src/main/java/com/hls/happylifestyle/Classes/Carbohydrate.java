@@ -1,7 +1,9 @@
 package com.hls.happylifestyle.Classes;
 
+import com.google.firebase.database.DataSnapshot;
+
 public class Carbohydrate {
-    private int carbs, sugar, fiber;
+    private float carbs, sugar, fiber;
 
     public Carbohydrate() {
         this.carbs = 0;
@@ -10,33 +12,39 @@ public class Carbohydrate {
 
     }
 
-    public Carbohydrate(int carbs, int sugar, int fiber) {
+    public Carbohydrate(float carbs, float sugar, float fiber) {
         this.carbs = carbs;
         this.sugar = sugar;
         this.fiber = fiber;
     }
 
-    public int getCarbs() {
+    public float getCarbs() {
         return carbs;
     }
 
-    public void setCarbs(int carbs) {
+    public void setCarbs(float carbs) {
         this.carbs = carbs;
     }
 
-    public int getSugar() {
+    public float getSugar() {
         return sugar;
     }
 
-    public void setSugar(int sugar) {
+    public void setSugar(float sugar) {
         this.sugar = sugar;
     }
 
-    public int getFiber() {
+    public float getFiber() {
         return fiber;
     }
 
-    public void setFiber(int fiber) {
+    public void setFiber(float fiber) {
         this.fiber = fiber;
+    }
+
+    public void getSnapshot(DataSnapshot child){
+        this.carbs = Float.parseFloat(child.child("carbs").getValue(String.class));
+        this.fiber = Float.parseFloat(child.child("fiber").getValue(String.class));
+        this.sugar = Float.parseFloat(child.child("sugar").getValue(String.class));
     }
 }

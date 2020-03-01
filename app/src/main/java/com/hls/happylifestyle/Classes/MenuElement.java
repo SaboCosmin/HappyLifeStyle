@@ -1,8 +1,8 @@
 package com.hls.happylifestyle.Classes;
 
 public class MenuElement {
-    private Food foods[];
-    private int weightOfFoods[];
+    private Food[] foods;
+    private int[] weightOfFoods;
 
     public MenuElement(Food[] foods, int[] weightOfFoods) {
         this.foods = foods;

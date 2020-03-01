@@ -1,11 +1,12 @@
 package com.hls.happylifestyle.Classes;
 
-public class Profile {
-    private String name, gender, purpose;
-    private int age, activityLevel, height;
-    private float weight;
+import java.io.Serializable;
 
-    public Profile(String name, String gender, int age, int activityLevel, int height, float weight, String purpose) {
+public class UserProfile implements Serializable {
+    private String name, gender, purpose;
+    private int age, activityLevel, height, weight;
+
+    public UserProfile(String name, String gender, int age, int activityLevel, int height, int weight, String purpose) {
         this.name = name;
         this.gender = gender;
         this.age = age;
@@ -63,11 +64,11 @@ public class Profile {
         this.height = height;
     }
 
-    public float getWeight() {
+    public int getWeight() {
         return weight;
     }
 
-    public void setWeight(float weight) {
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 }

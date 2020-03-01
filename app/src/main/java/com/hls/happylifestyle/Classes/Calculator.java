@@ -1,8 +1,8 @@
 package com.hls.happylifestyle.Classes;
 
-public class Calculator {
+public class Calculator{
 
-    private int calories;
+    private float calories;
     private Macronutrient macronutrient;
 
     public Calculator() {
@@ -15,11 +15,11 @@ public class Calculator {
         this.macronutrient = macronutrient;
     }
 
-    public int getCalories() {
+    public float getCalories() {
         return calories;
     }
 
-    public void setCalories(int calories) {
+    public void setCalories(float calories) {
         this.calories = calories;
     }
 

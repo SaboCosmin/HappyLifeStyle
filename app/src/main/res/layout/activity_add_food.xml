@@ -90,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="calories_input"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:textSize="25sp" />
         </LinearLayout>
 
@@ -111,8 +111,8 @@
                 android:id="@+id/proteins_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="proteins_input"
-                android:inputType="number"
+                android:hint="numberDecimal"
+                android:inputType="numberDecimal"
                 android:textSize="25sp" />
         </LinearLayout>
 
@@ -134,7 +134,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="carbs_input"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:textSize="25sp" />
         </LinearLayout>
 
@@ -156,7 +156,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="sugar_input"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:textSize="25sp" />
         </LinearLayout>
 
@@ -178,7 +178,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="fiber_input"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:textSize="25sp" />
         </LinearLayout>
 
@@ -200,7 +200,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="fat_input"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:textSize="25sp" />
         </LinearLayout>
 

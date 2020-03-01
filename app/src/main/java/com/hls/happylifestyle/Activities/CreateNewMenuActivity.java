@@ -11,7 +11,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hls.happylifestyle.Classes.Profile;
+import com.hls.happylifestyle.Classes.UserProfile;
 import com.hls.happylifestyle.R;
 
 public class CreateNewMenuActivity extends AppCompatActivity {
@@ -21,7 +21,7 @@ public class CreateNewMenuActivity extends AppCompatActivity {
     TextView caloriesTextView, proteinsTextView, carbsTextView, fatsTextView;
     AutoCompleteTextView userProteinsSelect, userCarbsSelect, userFatsSelect;
 
-    Profile userProfile;
+    UserProfile userProfile;
 
     @Override
     public void onBackPressed() {
@@ -45,14 +45,15 @@ public class CreateNewMenuActivity extends AppCompatActivity {
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mSharedPreferences.edit();
+        mEditor.apply();
 
         updateSharedPreferences();
         calculateMacros();
 
-        caloriesTextView.setText(Float.toString(Math.round(userCaloriesAuto)));
-        proteinsTextView.setText(Float.toString(Math.round(userProteinsAuto)));
-        fatsTextView.setText(Float.toString(Math.round(userFatsAuto)));
-        carbsTextView.setText(Float.toString(Math.round(userCarbsAuto)));
+        caloriesTextView.setText(String.valueOf(Math.round(userCaloriesAuto)));
+        proteinsTextView.setText(String.valueOf(Math.round(userProteinsAuto)));
+        fatsTextView.setText(String.valueOf(Math.round(userFatsAuto)));
+        carbsTextView.setText(String.valueOf(Math.round(userCarbsAuto)));
 
         if (getIntent().hasExtra("pageNameActivity")){
             TextView pageName = findViewById(R.id.pageName);
@@ -67,10 +68,10 @@ public class CreateNewMenuActivity extends AppCompatActivity {
         int age = Integer.parseInt(mSharedPreferences.getString(getString(R.string.key_age), "30"));
         int activity_level = Integer.parseInt(mSharedPreferences.getString(getString(R.string.key_activity), "0"));
         int height = Integer.parseInt(mSharedPreferences.getString(getString(R.string.key_height), "1.80"));
-        float weight = Float.parseFloat(mSharedPreferences.getString(getString(R.string.key_weight), "80"));
+        int weight = Integer.parseInt(mSharedPreferences.getString(getString(R.string.key_weight), "80"));
         String purpose = mSharedPreferences.getString(getString(R.string.key_purpose), "Better Nutrition");
 
-        userProfile = new Profile(name, gender, age, activity_level, height, weight, purpose);
+        userProfile = new UserProfile(name, gender, age, activity_level, height, weight, purpose);
     }
 
     private void calculateMacros(){
@@ -81,24 +82,24 @@ public class CreateNewMenuActivity extends AppCompatActivity {
             result = 10 * userProfile.getWeight() + 6.25f * userProfile.getHeight() - 5 * userProfile.getAge() + 5;
         }
         switch (userProfile.getActivityLevel()){
-            case 0: result = result  * 1.1f;
+            case 0: result *= 1.1f;
                 break;
-            case 1: result = result  * 1.2f;
+            case 1: result *= 1.2f;
                 break;
-            case 2: result = result  * 1.4f;
+            case 2: result *= 1.4f;
                 break;
-            case 3: result = result  * 1.6f;
+            case 3: result *= 1.6f;
                 break;
-            case 4: result = result  * 1.8f;
+            case 4: result *= 1.8f;
                 break;
-            case 5: result = result  * 2f;
+            case 5: result *= 2f;
                 break;
                 default: result = result * 1.1f;
         }
         if (userProfile.getPurpose().equals("Gain Muscle")){
-            result = result + (result * (20/100));
+            result = result + (result * 0.2f);
         }else if(userProfile.getPurpose().equals("Lose Weight")){
-            result = result - (result * (20/100));
+            result = result - (result * 0.2f);
         }
 
         userProteinsAuto = userProfile.getWeight() * 2;

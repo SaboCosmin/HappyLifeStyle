@@ -21,7 +21,7 @@ import com.hls.happylifestyle.R;
 public class AddFoodActivity extends AppCompatActivity {
     AutoCompleteTextView foodName, foodDescription, foodCalories, foodProteins, foodCarbs;
     AutoCompleteTextView foodSugar, foodFiber, foodFat;
-    AutoCompleteTextView foodMinWeight,foodMaxWeight, foodGoesWith;
+    AutoCompleteTextView foodMinWeight,foodMaxWeight;
     Spinner foodTypeSpinner;
     CheckBox goesWithSnack, goesWithEgg, goesWithDairy, goesWithCereal, goesWithFastFood;
     CheckBox goesWithFish, goesWithSeafood, goesWithFruit, goesWithMeat, goesWithNuts, goesWithPasta;
@@ -50,16 +50,16 @@ public class AddFoodActivity extends AppCompatActivity {
         String description = foodDescription.getText().toString();
         String foodTypeText = foodTypeSpinner.getSelectedItem().toString();
 
-        int calories = Integer.parseInt(foodCalories.getText().toString());
-        int proteins = Integer.parseInt(foodProteins.getText().toString());
-        int carbs = Integer.parseInt(foodCarbs.getText().toString());
-        int sugar = Integer.parseInt(foodSugar.getText().toString());
-        int fiber = Integer.parseInt(foodFiber.getText().toString());
-        int fat = Integer.parseInt(foodFat.getText().toString());
-        int price = 1;
-        int timeToPrepare = 1;
-        int minWeight = Integer.parseInt(foodMinWeight.getText().toString());
-        int maxWeight = Integer.parseInt(foodMaxWeight.getText().toString());
+        float calories = Float.parseFloat(foodCalories.getText().toString());
+        float proteins = Float.parseFloat(foodProteins.getText().toString());
+        float carbs = Float.parseFloat(foodCarbs.getText().toString());
+        float sugar = Float.parseFloat(foodSugar.getText().toString());
+        float fiber = Float.parseFloat(foodFiber.getText().toString());
+        float fat = Float.parseFloat(foodFat.getText().toString());
+        float price = 1;
+        float timeToPrepare = 1;
+        float minWeight = Float.parseFloat(foodMinWeight.getText().toString());
+        float maxWeight = Float.parseFloat(foodMaxWeight.getText().toString());
 
         if(getGoesWith().equals("0")){
             Toast.makeText(this, "Please select one of the CheckBoxes", Toast.LENGTH_SHORT).show();

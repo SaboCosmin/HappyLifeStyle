@@ -29,37 +29,97 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <AutoCompleteTextView
-                android:id="@+id/user_name"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/user_name"
-                android:inputType="textPersonName"
-                android:textSize="25sp" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-            <AutoCompleteTextView
-                android:id="@+id/Age"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/user_age"
-                android:inputType="number"
-                android:textSize="25sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:orientation="vertical">
 
-            <AutoCompleteTextView
-                android:id="@+id/Height"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/user_height"
-                android:inputType="number"
-                android:textSize="25sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Name: "
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="25sp" />
 
-            <AutoCompleteTextView
-                android:id="@+id/Weight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/user_weight"
-                android:inputType="numberDecimal"
-                android:textSize="25sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Age: "
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Height: "
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Weight: "
+                        android:textAlignment="center"
+                        android:textColor="#000000"
+                        android:textSize="25sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/user_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/user_name"
+                        android:inputType="textPersonName"
+                        android:textSize="25sp" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/Age"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/user_age"
+                        android:inputType="number"
+                        android:textSize="25sp" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/Height"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/user_height"
+                        android:inputType="number"
+                        android:textSize="25sp" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/Weight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/user_weight"
+                        android:inputType="numberDecimal"
+                        android:textSize="25sp" />
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/picked_layout"
@@ -242,12 +302,12 @@
 
         <Button
             android:id="@+id/save_button"
-            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
+            android:layout_weight="1"
             android:background="@drawable/box_button"
             android:gravity="bottom"
             android:onClick="saveUser"
@@ -256,14 +316,15 @@
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="25sp" />
+
         <Button
             android:id="@+id/edit_button"
-            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
+            android:layout_weight="1"
             android:background="@drawable/box_button"
             android:gravity="bottom"
             android:onClick="editPressed"

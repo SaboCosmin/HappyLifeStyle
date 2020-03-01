@@ -9,17 +9,17 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
+import com.hls.happylifestyle.Classes.Food;
 import com.hls.happylifestyle.R;
 
 public class InspectFoodActivity extends AppCompatActivity {
     SharedPreferences mSharedPreferences;
     SharedPreferences.Editor mEditor;
 
-    String foodName;
     TextView pageName, foodCalories, foodProteins, foodFiber, foodFat;
     TextView foodCarbs, foodSugar;
     AutoCompleteTextView quantityTextView;
-    int proteinsCalculator, fatsCalculator, sugarCalculator, carbsCalculator, caloriesCalculator, fibersCalculator;
+    Food foodCalculator;
     float foodQuantity = 100;
 
     @Override
@@ -27,20 +27,23 @@ public class InspectFoodActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspect_food);
 
+        foodCalculator = new Food();
+
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mSharedPreferences.edit();
+        mEditor.apply();
 
         getFoodValues();
         populate();
 
     }
 
-    public float reconfigure(int value, float quantity){
+    public float reconfigure(float value, float quantity){
         return (value*(quantity/100));
     }
 
     public void applyQuantity(View v){
-        if (quantityTextView.getText().toString() != ""){
+        if (!quantityTextView.getText().toString().equals("")){
             foodQuantity = Float.parseFloat(quantityTextView.getText().toString());
             populate();
         }
@@ -57,39 +60,40 @@ public class InspectFoodActivity extends AppCompatActivity {
         foodFiber = findViewById(R.id.fiberTextView_id);
         foodFat = findViewById(R.id.fatTextView_id);
 
-        pageName.setText(foodName);
-        foodCalories.setText(Float.toString(reconfigure(caloriesCalculator, foodQuantity)));
-        foodProteins.setText(Float.toString(reconfigure(proteinsCalculator, foodQuantity)));
-        foodCarbs.setText(Float.toString(reconfigure(carbsCalculator, foodQuantity)));
-        foodSugar.setText(Float.toString(reconfigure(sugarCalculator, foodQuantity)));
-        foodFiber.setText(Float.toString(reconfigure(fibersCalculator, foodQuantity)));
-        foodFat.setText(Float.toString(reconfigure(fatsCalculator, foodQuantity)));
+        pageName.setText(foodCalculator.getName());
+        foodCalories.setText(String.valueOf(reconfigure(foodCalculator.getMacros().getProteins(), foodQuantity)));
+        foodProteins.setText(String.valueOf(reconfigure(foodCalculator.getMacros().getProteins(), foodQuantity)));
+        foodCarbs.setText(String.valueOf(reconfigure(foodCalculator.getMacros().getCarbohydrate().getCarbs(), foodQuantity)));
+        foodSugar.setText(String.valueOf(reconfigure(foodCalculator.getMacros().getCarbohydrate().getSugar(), foodQuantity)));
+        foodFiber.setText(String.valueOf(reconfigure(foodCalculator.getMacros().getCarbohydrate().getFiber(), foodQuantity)));
+        foodFat.setText(String.valueOf(reconfigure(foodCalculator.getMacros().getFat(), foodQuantity)));
     }
 
     public void getFoodValues(){
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
 
-        foodName = extras.getString("FOOD_NAME");
-        caloriesCalculator = extras.getInt("FOOD_CALORIES");
-        proteinsCalculator = extras.getInt("FOOD_PROTEINS");
-        carbsCalculator = extras.getInt("FOOD_CARBS");
-        sugarCalculator = extras.getInt("FOOD_SUGAR");
-        fibersCalculator = extras.getInt("FOOD_FIBER");
-        fatsCalculator = extras.getInt("FOOD_FAT");
+        foodCalculator.setName(extras.getString("FOOD_NAME"));
+        foodCalculator.setCalories(extras.getFloat("FOOD_CALORIES"));
+        foodCalculator.getMacros().setProteins(extras.getFloat("FOOD_PROTEINS"));
+        foodCalculator.getMacros().getCarbohydrate().setCarbs(extras.getFloat("FOOD_CARBS"));
+        foodCalculator.getMacros().getCarbohydrate().setSugar(extras.getFloat("FOOD_SUGAR"));
+        foodCalculator.getMacros().getCarbohydrate().setFiber(extras.getFloat("FOOD_FIBER"));
+        foodCalculator.getMacros().setFat(extras.getFloat("FOOD_FAT"));
+
     }
 
     public void addFoodCalculator(View v){
         Intent startIntent = new Intent(getApplicationContext(), CalculatorActivity.class);
         Bundle extras = new Bundle();
 
-        extras.putString("FOOD_NAME", foodName);
-        extras.putInt("FOOD_CALORIES", caloriesCalculator);
-        extras.putInt("FOOD_CARBS", proteinsCalculator);
-        extras.putInt("FOOD_FAT", carbsCalculator);
-        extras.putInt("FOOD_FIBER", sugarCalculator);
-        extras.putInt("FOOD_PROTEINS", fibersCalculator);
-        extras.putInt("FOOD_SUGAR", fatsCalculator);
+        extras.putString("FOOD_NAME", foodCalculator.getName());
+        extras.putFloat("FOOD_CALORIES", foodCalculator.getCalories());
+        extras.putFloat("FOOD_CARBS", foodCalculator.getMacros().getProteins());
+        extras.putFloat("FOOD_FAT", foodCalculator.getMacros().getCarbohydrate().getCarbs());
+        extras.putFloat("FOOD_FIBER", foodCalculator.getMacros().getCarbohydrate().getSugar());
+        extras.putFloat("FOOD_PROTEINS", foodCalculator.getMacros().getCarbohydrate().getFiber());
+        extras.putFloat("FOOD_SUGAR", foodCalculator.getMacros().getFat());
 
         startIntent.putExtras(extras);
         startActivity(startIntent);
