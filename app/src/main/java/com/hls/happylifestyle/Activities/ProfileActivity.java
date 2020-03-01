@@ -27,6 +27,7 @@ public class ProfileActivity extends AppCompatActivity {
     private SharedPreferences.Editor mEditor;
 
     private UserProfile userProfile;
+    private UserProfile test;
 
     RadioGroup genderRadioGroup, purposeRadioGroup;
     Spinner activityLevelSpinner;
