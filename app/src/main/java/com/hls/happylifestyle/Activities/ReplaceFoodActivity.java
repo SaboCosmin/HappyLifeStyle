@@ -73,7 +73,7 @@ public class ReplaceFoodActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 Food value = new Food();
-                for(DataSnapshot child : children){
+                for(DataSnapshot child : children) {
                     value.getSnapshot(child);
                     mFoods.add(value);
                 }
@@ -94,7 +94,7 @@ public class ReplaceFoodActivity extends AppCompatActivity {
         });
     }
 
-    public void addFood(View v){
+    public void addFood(View v) {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if (mFood != null) {
@@ -152,8 +152,8 @@ public class ReplaceFoodActivity extends AppCompatActivity {
         }
     }
 
-    public void applyQuantity(View v){
-        if (!quantityTextView.getText().toString().equals("")){
+    public void applyQuantity(View v) {
+        if (!quantityTextView.getText().toString().equals("")) {
             Log.d("test", quantityTextView.getText().toString());
             foodQuantity = Float.parseFloat(quantityTextView.getText().toString()) / 100;
             populate();
@@ -161,8 +161,8 @@ public class ReplaceFoodActivity extends AppCompatActivity {
 
     }
 
-    public void populate(){
-        if(mFood != null) {
+    public void populate() {
+        if (mFood != null) {
             pageName.setText(String.valueOf(mFood.getName()));
             foodCalories.setText(String.valueOf(foodQuantity * mFood.getCalories()));
             foodProteins.setText(String.valueOf(foodQuantity * mFood.getMacros().getProteins()));

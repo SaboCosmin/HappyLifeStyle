@@ -42,7 +42,7 @@ public class Carbohydrate {
         this.fiber = fiber;
     }
 
-    public void getSnapshot(DataSnapshot child){
+    public void getSnapshot(DataSnapshot child) {
         this.carbs = Float.parseFloat(child.child("carbs").getValue(String.class));
         this.fiber = Float.parseFloat(child.child("fiber").getValue(String.class));
         this.sugar = Float.parseFloat(child.child("sugar").getValue(String.class));

@@ -56,28 +56,28 @@ public class CreateNewMenuActivity extends AppCompatActivity {
         fatsTextView.setText(String.valueOf(Math.round(userFatsAuto)));
         carbsTextView.setText(String.valueOf(Math.round(userCarbsAuto)));
 
-        if (getIntent().hasExtra("pageNameActivity")){
+        if (getIntent().hasExtra("pageNameActivity")) {
             TextView pageName = findViewById(R.id.pageName);
             String text = getIntent().getExtras().getString("pageNameActivity");
             pageName.setText(text);
         }
     }
 
-    private void updateSharedPreferences(){
+    private void updateSharedPreferences() {
         Gson gson = new Gson();
         String json = mSharedPreferences.getString(getString(R.string.user_profile), "");
 
         userProfile = gson.fromJson(json, UserProfile.class);
     }
 
-    private void calculateMacros(){
+    private void calculateMacros() {
         float result;
-        if (userProfile.getGender().equals("Female")){
+        if (userProfile.getGender().equals("Female")) {
             result = 10 * userProfile.getWeight() + 6.25f * userProfile.getHeight() - 5 * userProfile.getAge() - 161;
-        }else{
+        } else {
             result = 10 * userProfile.getWeight() + 6.25f * userProfile.getHeight() - 5 * userProfile.getAge() + 5;
         }
-        switch (userProfile.getActivityLevel()){
+        switch (userProfile.getActivityLevel()) {
             case 0: result *= 1.1f;
                 break;
             case 1: result *= 1.2f;
@@ -90,11 +90,11 @@ public class CreateNewMenuActivity extends AppCompatActivity {
                 break;
             case 5: result *= 2f;
                 break;
-                default: result = result * 1.1f;
+            default: result = result * 1.1f;
         }
-        if (userProfile.getPurpose().equals("Gain Muscle")){
+        if (userProfile.getPurpose().equals("Gain Muscle")) {
             result = result + (result * 0.2f);
-        }else if(userProfile.getPurpose().equals("Lose Weight")){
+        } else if (userProfile.getPurpose().equals("Lose Weight")) {
             result = result - (result * 0.2f);
         }
 
@@ -104,29 +104,29 @@ public class CreateNewMenuActivity extends AppCompatActivity {
         userCaloriesAuto = result;
     }
 
-    public void manualCreate(View view){
+    public void manualCreate(View view) {
         float proteins;
-        if(TextUtils.isEmpty(userProteinsSelect.getText().toString())){
+        if (TextUtils.isEmpty(userProteinsSelect.getText().toString())) {
             proteins = userProteinsAuto;
-        }else{
+        } else {
             proteins = Float.parseFloat(userProteinsSelect.getText().toString());
         }
         mEditor.putFloat(getString(R.string.user_key_proteins_total), proteins);
         mEditor.commit();
 
         float carbs;
-        if(TextUtils.isEmpty(userCarbsSelect.getText().toString())){
+        if (TextUtils.isEmpty(userCarbsSelect.getText().toString())) {
             carbs = userCarbsAuto;
-        }else{
+        } else {
             carbs = Float.parseFloat(userCarbsSelect.getText().toString());
         }
         mEditor.putFloat(getString(R.string.user_key_carbs_total), carbs);
         mEditor.commit();
 
         float fats;
-        if(TextUtils.isEmpty(userFatsSelect.getText().toString())){
+        if (TextUtils.isEmpty(userFatsSelect.getText().toString())) {
             fats = userFatsAuto;
-        }else{
+        } else {
             fats = Float.parseFloat(userFatsSelect.getText().toString());
         }
         mEditor.putFloat(getString(R.string.user_key_fats_total), fats);
@@ -152,7 +152,7 @@ public class CreateNewMenuActivity extends AppCompatActivity {
         mEditor.commit();
         Toast.makeText(this, "Your manual added macronutrients are updating... + new calories count: " + calories, Toast.LENGTH_SHORT).show();
     }
-    public  void automatCreate(View view){
+    public  void automatCreate(View view) {
         mEditor.putFloat(getString(R.string.user_key_proteins_total), userProteinsAuto);
         mEditor.commit();
         mEditor.putFloat(getString(R.string.user_key_carbs_total), userCarbsAuto);

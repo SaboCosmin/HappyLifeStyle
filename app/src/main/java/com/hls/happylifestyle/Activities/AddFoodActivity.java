@@ -45,7 +45,7 @@ public class AddFoodActivity extends AppCompatActivity {
 
     }
 
-    public void uploadFood(View v){
+    public void uploadFood(View v) {
         String name = foodName.getText().toString();
         String description = foodDescription.getText().toString();
         String foodTypeText = foodTypeSpinner.getSelectedItem().toString();
@@ -61,9 +61,9 @@ public class AddFoodActivity extends AppCompatActivity {
         float minWeight = Float.parseFloat(foodMinWeight.getText().toString());
         float maxWeight = Float.parseFloat(foodMaxWeight.getText().toString());
 
-        if(getGoesWith().equals("0")){
+        if (getGoesWith().equals("0")) {
             Toast.makeText(this, "Please select one of the CheckBoxes", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             String goesWith = getGoesWith();
             Log.d("test", goesWith);
             Carbohydrate carbohydrate = new Carbohydrate(carbs, sugar, fiber);
@@ -76,7 +76,7 @@ public class AddFoodActivity extends AppCompatActivity {
 
     }
 
-    public void initializeViews(){
+    public void initializeViews() {
         foodName = findViewById(R.id.name_input);
         foodDescription = findViewById(R.id.description_input);
         foodCalories = findViewById(R.id.calories_input);
@@ -114,77 +114,77 @@ public class AddFoodActivity extends AppCompatActivity {
         goesWithVegetable = findViewById(R.id.checkBoxVegetable);
     }
 
-    public String getGoesWith(){
+    public String getGoesWith() {
         boolean oneIsChecked = false;
         String goesWith ="";
-        if (goesWithSnack.isChecked()){
+        if (goesWithSnack.isChecked()) {
             goesWith = goesWith.concat(goesWithSnack.getText().toString() + ",");
             oneIsChecked = true;
         }
-        if (goesWithEgg.isChecked()){
+        if (goesWithEgg.isChecked()) {
             goesWith = goesWith.concat(goesWithEgg.getText().toString() + ",");
             oneIsChecked = true;
         }
-        if (goesWithDairy.isChecked()){
+        if (goesWithDairy.isChecked()) {
             goesWith = goesWith.concat(goesWithDairy.getText().toString() + ",");
             oneIsChecked = true;
         }
-        if (goesWithCereal.isChecked()){
+        if (goesWithCereal.isChecked()) {
             goesWith = goesWith.concat(goesWithCereal.getText().toString() + ",");
             oneIsChecked = true;
         }
-        if (goesWithFastFood.isChecked()){
+        if (goesWithFastFood.isChecked()) {
             goesWith = goesWith.concat(goesWithFastFood.getText().toString() + ",");
             oneIsChecked = true;
         }
-        if (goesWithFish.isChecked()){
+        if (goesWithFish.isChecked()) {
             goesWith = goesWith.concat(goesWithFish.getText().toString() + ",");
             oneIsChecked = true;
         }
-        if (goesWithSeafood.isChecked()){
+        if (goesWithSeafood.isChecked()) {
             goesWith = goesWith.concat(goesWithSeafood.getText().toString() + ",");
             oneIsChecked = true;
         }
-        if (goesWithFruit.isChecked()){
+        if (goesWithFruit.isChecked()) {
             goesWith = goesWith.concat(goesWithFruit.getText().toString() + ",");
             oneIsChecked = true;
         }
-        if (goesWithMeat.isChecked()){
+        if (goesWithMeat.isChecked()) {
             goesWith = goesWith.concat(goesWithMeat.getText().toString() + ",");
             oneIsChecked = true;
         }
-        if (goesWithNuts.isChecked()){
+        if (goesWithNuts.isChecked()) {
             goesWith = goesWith.concat(goesWithNuts.getText().toString() + ",");
             oneIsChecked = true;
         }
-        if (goesWithPasta.isChecked()){
+        if (goesWithPasta.isChecked()) {
             goesWith = goesWith.concat(goesWithPasta.getText().toString() + ",");
             oneIsChecked = true;
         }
-        if (goesWithRice.isChecked()){
+        if (goesWithRice.isChecked()) {
             goesWith = goesWith.concat(goesWithRice.getText().toString() + ",");
             oneIsChecked = true;
         }
-        if (goesWithSoup.isChecked()){
+        if (goesWithSoup.isChecked()) {
             goesWith = goesWith.concat(goesWithSoup.getText().toString() + ",");
             oneIsChecked = true;
         }
-        if (goesWithSalad.isChecked()){
+        if (goesWithSalad.isChecked()) {
             goesWith = goesWith.concat(goesWithSalad.getText().toString() + ",");
             oneIsChecked = true;
         }
-        if (goesWithDesert.isChecked()){
+        if (goesWithDesert.isChecked()) {
             goesWith = goesWith.concat(goesWithDesert.getText().toString() + ",");
             oneIsChecked = true;
         }
-        if (goesWithVegetable.isChecked()){
+        if (goesWithVegetable.isChecked()) {
             goesWith = goesWith.concat(goesWithVegetable.getText().toString() + ",");
             oneIsChecked = true;
         }
 
-        if(oneIsChecked){
+        if (oneIsChecked) {
             return goesWith.substring(0, goesWith.length() - 1);
-        }else{
+        } else {
             return "0";
         }
     }

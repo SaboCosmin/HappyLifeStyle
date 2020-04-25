@@ -60,7 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
         mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         activityLevelSpinner.setAdapter(mAdapter);
 
-        if (getIntent().hasExtra("pageNameActivity")){
+        if (getIntent().hasExtra("pageNameActivity")) {
             TextView pageName = findViewById(R.id.pageName);
             String text = getIntent().getExtras().getString("pageNameActivity");
             pageName.setText(text);
@@ -69,36 +69,36 @@ public class ProfileActivity extends AppCompatActivity {
         initViews();
     }
 
-    public void saveUser(View v){
+    public void saveUser(View v) {
 
         saveLayoutView();
 
         String name = userName.getText().toString();
-        if(TextUtils.isEmpty(name)){
+        if (TextUtils.isEmpty(name)) {
             name = "DefaultName";
         }
 
         String age_text = userAge.getText().toString();
         int age;
-        if(TextUtils.isEmpty(age_text)){
+        if (TextUtils.isEmpty(age_text)) {
             age = 30;
-        }else{
+        } else {
              age = Integer.parseInt(userAge.getText().toString());
         }
 
         String height_text = userHeight.getText().toString();
         int height;
-        if(TextUtils.isEmpty(height_text)){
+        if (TextUtils.isEmpty(height_text)) {
             height = 180;
-        }else{
+        } else {
             height = Integer.parseInt(userHeight.getText().toString());
         }
 
         String weight_text = userWeight.getText().toString();
         int weight;
-        if(TextUtils.isEmpty(weight_text)){
+        if (TextUtils.isEmpty(weight_text)) {
             weight = 80;
-        }else{
+        } else {
             weight = Integer.parseInt(userWeight.getText().toString());
         }
 
@@ -119,7 +119,7 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(getIntent());
     }
 
-    private void saveSharedPreferences(UserProfile userProfile){
+    private void saveSharedPreferences(UserProfile userProfile) {
         mEditor.putBoolean(getString(R.string.key_first_run), true);
         mEditor.commit();
 
@@ -131,30 +131,30 @@ public class ProfileActivity extends AppCompatActivity {
         Toast.makeText(this, "Your new preferences are updating...", Toast.LENGTH_SHORT).show();
     }
 
-    private void updateSharedPreferences(){
+    private void updateSharedPreferences() {
         Gson gson = new Gson();
         String json = mSharedPreferences.getString(getString(R.string.user_profile), "");
 
         userProfile = gson.fromJson(json, UserProfile.class);
     }
 
-    public void editPressed(View v){
+    public void editPressed(View v) {
         editLayoutView();
     }
 
-    public void initViews(){
-        if(mSharedPreferences.getBoolean(getString(R.string.key_first_run), false)){
+    public void initViews() {
+        if (mSharedPreferences.getBoolean(getString(R.string.key_first_run), false)) {
 
             updateSharedPreferences();
             saveLayoutView();
             initUserDataView(userProfile);
 
-        }else{
+        } else {
            editLayoutView();
         }
     }
 
-    private void initializeViews(){
+    private void initializeViews() {
         userName = findViewById(R.id.user_name);
         userAge = findViewById(R.id.Age);
         userHeight = findViewById(R.id.Height);
@@ -173,7 +173,7 @@ public class ProfileActivity extends AppCompatActivity {
         saveButton = findViewById(R.id.save_button);
     }
 
-    public void editLayoutView(){
+    public void editLayoutView() {
         userName.setEnabled(true);
         userAge.setEnabled(true);
         userWeight.setEnabled(true);
@@ -186,7 +186,7 @@ public class ProfileActivity extends AppCompatActivity {
         purposeLayout.setVisibility(LinearLayout.VISIBLE);
     }
 
-    public void saveLayoutView(){
+    public void saveLayoutView() {
         userName.setEnabled(false);
         userAge.setEnabled(false);
         userWeight.setEnabled(false);
@@ -199,7 +199,7 @@ public class ProfileActivity extends AppCompatActivity {
         purposeLayout.setVisibility(LinearLayout.GONE);
     }
 
-    public void initUserDataView(UserProfile userProfile){
+    public void initUserDataView(UserProfile userProfile) {
         userName.setText(userProfile.getName());
         userAge.setText(String.valueOf(userProfile.getAge()));
         userWeight.setText(String.valueOf(userProfile.getWeight()));

@@ -62,7 +62,7 @@ public class CalculatorActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 Food newFood = new Food();
-                for(DataSnapshot child : children){
+                for(DataSnapshot child : children) {
                     newFood.getSnapshot(child);
                     mFoods.add(newFood);
                 }
@@ -100,7 +100,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
     }
 
-    public void restoreValues(){
+    public void restoreValues() {
         Macronutrient macro = new Macronutrient();
         Carbohydrate carb = new Carbohydrate();
 
@@ -117,7 +117,7 @@ public class CalculatorActivity extends AppCompatActivity {
         populate();
     }
 
-    public void getFoodValues(){
+    public void getFoodValues() {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
 
@@ -137,13 +137,13 @@ public class CalculatorActivity extends AppCompatActivity {
         upload();
     }
 
-    public void resetValues(View v){
+    public void resetValues(View v) {
 
         calculatorData = new Calculator();
         upload();
     }
 
-    public void upload(){
+    public void upload() {
         mEditor.putFloat(getString(R.string.proteins_calculator), calculatorData.getMacronutrient().getProteins());
         mEditor.commit();
         mEditor.putFloat(getString(R.string.carbs_calculator), calculatorData.getMacronutrient().getCarbohydrate().getCarbs());
@@ -158,7 +158,7 @@ public class CalculatorActivity extends AppCompatActivity {
         populate();
     }
 
-    public void populate(){
+    public void populate() {
         proteins.setText(calculatorData.getMacronutrient().getProteins() + " g");
         fats.setText(calculatorData.getMacronutrient().getFat() + " g");
         sugar.setText(calculatorData.getMacronutrient().getCarbohydrate().getSugar() + " g");

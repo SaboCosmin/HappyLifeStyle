@@ -97,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
         return confirmPassword.equals(password) && password.length() > 6;
     }
 
-    private void createFirebaseUser(){
+    private void createFirebaseUser() {
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -105,10 +105,10 @@ public class RegisterActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 Log.d("Chat", "CreateUser onCompleate: " + task.isSuccessful());
 
-                if(!task.isSuccessful()){
+                if (!task.isSuccessful()) {
                     Log.d("Chat", "CreateUser Failed: " + task.isSuccessful());
                     showErrorDialog("Registration attempt failed");
-                }else{
+                } else {
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                     finish();
                     startActivity(intent);
@@ -117,7 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void showErrorDialog(String message){
+    private void showErrorDialog(String message) {
         new AlertDialog.Builder(this)
                 .setTitle("Oops")
                 .setMessage(message)

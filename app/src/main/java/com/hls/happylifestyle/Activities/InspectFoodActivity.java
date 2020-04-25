@@ -38,18 +38,18 @@ public class InspectFoodActivity extends AppCompatActivity {
 
     }
 
-    public float reconfigure(float value, float quantity){
+    public float reconfigure(float value, float quantity) {
         return (value*(quantity/100));
     }
 
-    public void applyQuantity(View v){
-        if (!quantityTextView.getText().toString().equals("")){
+    public void applyQuantity(View v) {
+        if (!quantityTextView.getText().toString().equals("")) {
             foodQuantity = Float.parseFloat(quantityTextView.getText().toString());
             populate();
         }
     }
 
-    public void populate(){
+    public void populate() {
         quantityTextView = findViewById(R.id.quantity_autoCompleteTextView);
 
         pageName = findViewById(R.id.pageName);
@@ -69,7 +69,7 @@ public class InspectFoodActivity extends AppCompatActivity {
         foodFat.setText(String.valueOf(reconfigure(foodCalculator.getMacros().getFat(), foodQuantity)));
     }
 
-    public void getFoodValues(){
+    public void getFoodValues() {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
 
@@ -83,7 +83,7 @@ public class InspectFoodActivity extends AppCompatActivity {
 
     }
 
-    public void addFoodCalculator(View v){
+    public void addFoodCalculator(View v) {
         Intent startIntent = new Intent(getApplicationContext(), CalculatorActivity.class);
         Bundle extras = new Bundle();
 

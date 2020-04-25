@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
     }
 
-    public void signInExistingUser(View v)   {
+    public void signInExistingUser(View v) {
         attemptLogin();
     }
 
@@ -60,31 +60,29 @@ public class LoginActivity extends AppCompatActivity {
     private void attemptLogin() {
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
-        if(email.equals("") || password.equals("")){
+        if (email.equals("") || password.equals("")) {
             showErrorDialog("Please insert values");
             return;
-        }else{
+        } else {
             Toast.makeText(this, "Login in Progress...", Toast.LENGTH_SHORT).show();
         }
 
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(!task.isSuccessful()){
+                if (!task.isSuccessful()) {
                     Log.d("Chat", "Problem signing in: " + task.getException());
                     showErrorDialog("There was a problem signing in");
-                }else{
+                } else {
                     Intent intent = new Intent(LoginActivity.this, MainUserActivity.class);
                     finish();
                     startActivity(intent);
                 }
             }
         });
-
-
     }
 
-    private void showErrorDialog(String message){
+    private void showErrorDialog(String message) {
         new AlertDialog.Builder(this)
                 .setTitle("Oops")
                 .setMessage(message)

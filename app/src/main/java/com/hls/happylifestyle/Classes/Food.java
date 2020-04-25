@@ -15,7 +15,7 @@ public class Food {
     private float maxWeight;
     private Macronutrient macros;
 
-    public Food(){
+    public Food() {
         this.name = "DefaultFoodName";
         this.description = "default description";
         this.type = "defaultType";
@@ -121,7 +121,7 @@ public class Food {
         this.macros = macros;
     }
 
-    public void getSnapshot(DataSnapshot child){
+    public void getSnapshot(DataSnapshot child) {
         this.name = child.child("name").getValue(String.class);
         this.description = child.child("description").getValue(String.class);
         this.type = child.child("type").getValue(String.class);

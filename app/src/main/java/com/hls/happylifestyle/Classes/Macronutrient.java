@@ -7,7 +7,7 @@ public class Macronutrient {
     private float fat;
     Carbohydrate carbohydrate;
 
-    public  Macronutrient(){
+    public  Macronutrient() {
         this.proteins = 0;
         this.fat = 0;
         carbohydrate = new Carbohydrate();

@@ -25,44 +25,44 @@ public class MenuElement {
         this.weightOfFoods = weightOfFoods;
     }
 
-    public float totalProteins(){
+    public float totalProteins() {
         float total = 0;
-        for(int i = 0; i < foods.length; i++){
+        for(int i = 0; i < foods.length; i++) {
             total += foods[i].getMacros().getProteins() * weightOfFoods[i]/100;
         }
         return total;
     }
-    public float totalFats(){
+    public float totalFats() {
         float total = 0;
-        for(int i = 0; i < foods.length; i++){
+        for(int i = 0; i < foods.length; i++) {
             total += foods[i].getMacros().getFat() * weightOfFoods[i]/100;
         }
         return total;
     }
-    public float totalCarbs(){
+    public float totalCarbs() {
         float total = 0;
-        for(int i = 0; i < foods.length; i++){
+        for(int i = 0; i < foods.length; i++) {
             total += foods[i].getMacros().getCarbohydrate().getCarbs() * weightOfFoods[i]/100;
         }
         return total;
     }
-    public float totalCalories(){
+    public float totalCalories() {
         float total = 0;
-        for(int i = 0; i < foods.length; i++){
+        for(int i = 0; i < foods.length; i++) {
             total += foods[i].getCalories() * weightOfFoods[i]/100;
         }
         return total;
     }
-    public float totalSugar(){
+    public float totalSugar() {
         float total = 0;
-        for(int i = 0; i < foods.length; i++){
+        for(int i = 0; i < foods.length; i++) {
             total += foods[i].getMacros().getCarbohydrate().getSugar() * weightOfFoods[i]/100;
         }
         return total;
     }
-    public float totalFibers(){
+    public float totalFibers() {
         float total = 0;
-        for(int i = 0; i < foods.length; i++){
+        for(int i = 0; i < foods.length; i++) {
             total += foods[i].getMacros().getCarbohydrate().getFiber() * weightOfFoods[i]/100;
         }
         return total;
